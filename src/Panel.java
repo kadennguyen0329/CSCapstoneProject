@@ -3,7 +3,6 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
    
-public class panelFormat extends JPanel implements KeyListener
+public class Panel extends JPanel implements KeyListener
 {
    public static final int XSIZE = 1920;
    public static final int YSIZE = 1200;
@@ -26,7 +25,7 @@ public class panelFormat extends JPanel implements KeyListener
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
     
-   public panelFormat()
+   public Panel()
    {
       t = new Timer(1, new Listener());
       t.start();
