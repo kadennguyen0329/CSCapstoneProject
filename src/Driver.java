@@ -15,7 +15,5 @@ public class Driver
       frame.setContentPane(screen);		
       frame.setVisible(true);
       frame.addKeyListener(screen);
-      System.out.println();
-      System.out.println("yo momam!!");
    }     
 }
