@@ -1,4 +1,3 @@
-import javax.swing.ImageIcon;
 public class Character extends Entity
 {
    private int health;
@@ -13,7 +12,7 @@ public class Character extends Entity
       health = health1;
       speed = speed1;
       strength = strength1;
-      name = name1;
+
    }
    
    public int getHealth(){
