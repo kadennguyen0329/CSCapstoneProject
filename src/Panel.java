@@ -2,6 +2,8 @@ import java.util.HashSet;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -12,15 +14,16 @@ import java.awt.event.ActionEvent;
    
 public class Panel extends JPanel implements KeyListener
 {
-   public static final int XSIZE = 1920;
-   public static final int YSIZE = 1200;
+   public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+   public static final int XSIZE = (int) size.getWidth();
+   public static final int YSIZE = (int) size.getHeight();
    public static final int LOBBY = 0;
    public static final int EHALL = 1;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
-   public static final int PLAYER_HEIGHT = 144;
-   public static final int PLAYER_WIDTH = 54;
+   public static final int PLAYER_HEIGHT = YSIZE/13;
+   public static final int PLAYER_WIDTH = XSIZE/45; 
    
    public static int location;
    public static int frames;
