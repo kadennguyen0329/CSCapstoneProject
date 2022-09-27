@@ -7,7 +7,7 @@ public class Entity
    private int height;
    private int width;
    
-   public Entity(int xCoord, int yCoord, int h, int w, String imageFileName)
+   public Entity(int xCoord, int yCoord, int w, int h, String imageFileName)
    {
       x = xCoord;
       y = yCoord;
@@ -46,7 +46,7 @@ public class Entity
       return y;
    }
    
-    public void setY(int y1)
+   public void setY(int y1)
    {
       y = y1;
    }
@@ -59,6 +59,11 @@ public class Entity
    public void moveY(int spaces)
    {
       y += spaces;
+   }
+   
+   public String toString()
+   {
+      return x + " " + y + " " + width + " " + height;
    }
 }
 

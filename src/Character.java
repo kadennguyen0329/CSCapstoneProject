@@ -5,9 +5,9 @@ public class Character extends Entity
    private int strength;
    private String name;
    
-   public Character(int xCoord, int yCoord, int h, int w, String imageFileName, String name1, int health1, int speed1, int strength1)
+   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, String name1, int health1, int speed1, int strength1)
    {
-      super(xCoord, yCoord, h, w, imageFileName);
+      super(xCoord, yCoord, w, h, imageFileName);
       name = name1;
       health = health1;
       speed = speed1;

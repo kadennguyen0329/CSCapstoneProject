@@ -18,9 +18,11 @@ public class Panel extends JPanel implements KeyListener
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
+   public static final int PLAYER_HEIGHT = 144;
+   public static final int PLAYER_WIDTH = 54;
+   
    public static int location;
-   public static final int PLAYER_HEIGHT = 72;
-   public static final int PLAYER_WIDTH = 27;
+   public static int frames;
    
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
@@ -31,20 +33,19 @@ public class Panel extends JPanel implements KeyListener
       t.start();
       pressedKeys = new HashSet<Integer>();
       location = LOBBY;
-      mainPlayer = new Character(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", "Kaden", 100, 4, 1);
-      
+      frames = 0;
+      mainPlayer = new Character(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", "Kaden", 100, defaultSpeed, 1);
    }
    
    public void movePlayer()
    {
-      
-      if(pressedKeys.contains(KeyEvent.VK_W) && mainPlayer.getY() - mainPlayer.getSpeed() >= 0) 
+      if(pressedKeys.contains(KeyEvent.VK_W)) 
          mainPlayer.moveY(-mainPlayer.getSpeed());
-      else if(pressedKeys.contains(KeyEvent.VK_S) && mainPlayer.getY() + PLAYER_HEIGHT  + mainPlayer.getSpeed() <= YSIZE)
+      else if(pressedKeys.contains(KeyEvent.VK_S))
          mainPlayer.moveY(mainPlayer.getSpeed());     
-      if(pressedKeys.contains(KeyEvent.VK_A) && mainPlayer.getX() - mainPlayer.getSpeed() >= 0)
+      if(pressedKeys.contains(KeyEvent.VK_A))
          mainPlayer.moveX(-mainPlayer.getSpeed());
-      else if(pressedKeys.contains(KeyEvent.VK_D) && mainPlayer.getX() + PLAYER_WIDTH + mainPlayer.getSpeed() <= XSIZE)
+      else if(pressedKeys.contains(KeyEvent.VK_D))
          mainPlayer.moveX(mainPlayer.getSpeed());
    }
    
@@ -61,17 +62,21 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/lobby.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
-      g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getHeight(), mainPlayer.getWidth(), null);
+      g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
    
    public void setBoundaries(Character c)
    {
       if(location == LOBBY)
       {
-         if(c.getX() < 0)
+         if(c.getX() <= 0)
             c.setX(0);
-         if(c.getY() < 0)
+         if(c.getY() <= 0)
             c.setY(0);
+         if(c.getX() >= XSIZE-c.getWidth())
+            c.setX(XSIZE-c.getWidth());
+         if(c.getY() >= YSIZE-c.getHeight())
+            c.setY(YSIZE-c.getHeight());
       }
    }
    
@@ -97,8 +102,10 @@ public class Panel extends JPanel implements KeyListener
       public void actionPerformed(ActionEvent e) //methods called every frame
       {
          movePlayer();
-        // setBoundaries(mainPlayer);
-         repaint();  
+         if(frames > 100)
+            setBoundaries(mainPlayer);
+         repaint();
+         frames++;
       }
    }
 }
