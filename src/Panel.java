@@ -15,6 +15,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int XSIZE = 1920;
    public static final int YSIZE = 1200;
    public static final int LOBBY = 0;
+   public static final int EHALL = 1;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
@@ -62,6 +63,11 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/lobby.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == EHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/eHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
    
@@ -69,12 +75,29 @@ public class Panel extends JPanel implements KeyListener
    {
       if(location == LOBBY)
       {
-         if(c.getX() <= 0)
-            c.setX(0);
+         if(c.getX() <= 0){
+            location = EHALL;
+            c.setX(XSIZE - c.getWidth()*2);
+            c.setY(YSIZE/2);
+         }
          if(c.getY() <= 0)
             c.setY(0);
          if(c.getX() >= XSIZE-c.getWidth())
             c.setX(XSIZE-c.getWidth());
+         if(c.getY() >= YSIZE-c.getHeight())
+            c.setY(YSIZE-c.getHeight());
+      }
+      if(location == EHALL)
+      {
+         if(c.getX() <= 0)
+            c.setX(0);
+         if(c.getY() <= 0)
+            c.setY(0);
+         if(c.getX() >= XSIZE-c.getWidth()){
+            location = LOBBY;
+            c.setX(c.getWidth());
+            c.setY(YSIZE - ((YSIZE/9)*8));
+         }
          if(c.getY() >= YSIZE-c.getHeight())
             c.setY(YSIZE-c.getHeight());
       }
