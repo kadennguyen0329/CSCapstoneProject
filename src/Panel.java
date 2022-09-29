@@ -17,8 +17,8 @@ public class Panel extends JPanel implements KeyListener
    public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
    public static final int XSIZE = (int) size.getWidth();
    public static final int YSIZE = (int) size.getHeight();
-   public static final int LOBBY = 0;
-   public static final int EHALL = 1;
+   public static final int LOBBY = 1;
+   public static final int EHALL = 2;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
