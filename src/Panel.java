@@ -1,10 +1,13 @@
 import java.util.HashSet;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,6 +33,8 @@ public class Panel extends JPanel implements KeyListener
    
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
+   
+   private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>();
     
    public Panel()
    {
@@ -43,13 +48,16 @@ public class Panel extends JPanel implements KeyListener
    
    public void movePlayer()
    {
-      if(pressedKeys.contains(KeyEvent.VK_W)) 
+      if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()))
          mainPlayer.moveY(-mainPlayer.getSpeed());
-      else if(pressedKeys.contains(KeyEvent.VK_S))
-         mainPlayer.moveY(mainPlayer.getSpeed());     
-      if(pressedKeys.contains(KeyEvent.VK_A))
+         
+      else if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
+         mainPlayer.moveY(mainPlayer.getSpeed()); 
+             
+      if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
          mainPlayer.moveX(-mainPlayer.getSpeed());
-      else if(pressedKeys.contains(KeyEvent.VK_D))
+         
+      else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed(), mainPlayer.getY()))
          mainPlayer.moveX(mainPlayer.getSpeed());
    }
    
@@ -65,6 +73,9 @@ public class Panel extends JPanel implements KeyListener
       {
          ImageIcon pic = new ImageIcon("images/lobby.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+         g.setColor(Color.orange);
+         for(Rectangle r:obstacles)
+            g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
       }
       else if(location == EHALL)
       {
@@ -78,6 +89,7 @@ public class Panel extends JPanel implements KeyListener
    {
       if(location == LOBBY)
       {
+         obstacles.add(new Rectangle(100, 100, 100, 100));
          if(c.getX() <= 0){
             location = EHALL;
             c.setX(XSIZE - c.getWidth()*2);
@@ -106,6 +118,18 @@ public class Panel extends JPanel implements KeyListener
       }
    }
    
+   public static double distance(int x1, int y1, int x2, int y2){
+      return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+   }
+   
+   public boolean checkObstacleCollisions(int x, int y){
+      for(Rectangle r: obstacles){
+         if(r.contains(x, y))
+            return true;
+      }
+      return false;
+   }
+   
    public void keyTyped(KeyEvent e) //methods called when key is typed
    {
       
@@ -127,6 +151,7 @@ public class Panel extends JPanel implements KeyListener
    {
       public void actionPerformed(ActionEvent e) //methods called every frame
       {
+         
          movePlayer();
          if(frames > 100)
             setBoundaries(mainPlayer);
