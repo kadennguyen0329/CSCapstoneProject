@@ -94,14 +94,26 @@ public class Panel extends JPanel implements KeyListener
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
    
-   public void setBoundaries(Character c)
+   public void setWalls()
    {
+      for(int i=0; i<obstacles.size(); i++)
+         obstacles.remove(i);
       if(location == LOBBY)
       {
-         for(int i=0; i<obstacles.size(); i++){
-            obstacles.remove(i);
-         }
          obstacles.add(new Rectangle(0, YSIZE/8*2, XSIZE/64*17, YSIZE));
+      }
+      else if(location == EHALL)
+      {
+         obstacles.add(new Rectangle(0, 0, XSIZE, YSIZE/5));
+         obstacles.add(new Rectangle(0, YSIZE/40*29, XSIZE, YSIZE/3));
+      }
+   }
+   
+   public void setBoundaries(Character c)
+   {
+      setWalls();
+      if(location == LOBBY)
+      {
          if(c.getX() <= 0){
             location = EHALL;
             c.setX(XSIZE - c.getWidth()*2);
@@ -116,11 +128,6 @@ public class Panel extends JPanel implements KeyListener
       }
       if(location == EHALL)
       {
-         for(int i=0; i<obstacles.size(); i++){
-            obstacles.remove(i);
-         }
-         obstacles.add(new Rectangle(0, 0, XSIZE, YSIZE/5));
-         obstacles.add(new Rectangle(0, YSIZE/40*29, XSIZE, YSIZE/3));
          if(c.getX() <= 0)
             c.setX(0);
          if(c.getY() <= 0)
