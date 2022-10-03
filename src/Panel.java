@@ -23,6 +23,8 @@ public class Panel extends JPanel implements KeyListener
    public static final int LOBBY = 1;
    public static final int EHALL = 2;
    public static final int FHALL = 3;
+   public static final int CAFEA = 4;
+   public static final int CAFEB = 5;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
@@ -104,6 +106,18 @@ public class Panel extends JPanel implements KeyListener
          }
          
       }
+      else if(location == CAFEA)
+      {
+         ImageIcon pic = new ImageIcon("images/cafeA.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+        if(obstacles == null){
+            Color myColor = new Color(0, 0, 0, 0);
+            g.setColor(myColor);
+            for(Rectangle r:obstacles)
+               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         }
+         
+      }
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
    
@@ -170,9 +184,22 @@ public class Panel extends JPanel implements KeyListener
             location = LOBBY;
             c.setY(0);
          }
+         if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() > YSIZE/2){
+            location = CAFEA;
+            c.setY(YSIZE/2);
+            c.setX(0);
+         }
          if(c.getY() <= 0)
             c.setY(0);
          
+      }
+      if(location == CAFEA)
+      {
+         if(c.getX() < 0){
+            location = FHALL;
+            c.setY(YSIZE/5*4);
+            c.setX(XSIZE-PLAYER_WIDTH);
+         }
       }
    }
    
