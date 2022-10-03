@@ -22,6 +22,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int YSIZE = (int) size.getHeight();
    public static final int LOBBY = 1;
    public static final int EHALL = 2;
+   public static final int FHALL = 3;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = 4;
@@ -91,6 +92,18 @@ public class Panel extends JPanel implements KeyListener
                g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
          }
       }
+      else if(location == FHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/fHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+        if(obstacles == null){
+            Color myColor = new Color(0, 0, 0, 0);
+            g.setColor(myColor);
+            for(Rectangle r:obstacles)
+               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         }
+         
+      }
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
    
@@ -107,6 +120,12 @@ public class Panel extends JPanel implements KeyListener
          obstacles.add(new Rectangle(0, 0, XSIZE, YSIZE/5));
          obstacles.add(new Rectangle(0, YSIZE/40*29, XSIZE, YSIZE/3));
       }
+      else if(location == FHALL)
+      {
+         obstacles.add(new Rectangle(0, 0, XSIZE/128*35, YSIZE));
+         obstacles.add(new Rectangle(XSIZE/64*53, 0, XSIZE, YSIZE/5));
+         obstacles.add(new Rectangle(XSIZE/64*53, YSIZE/36*13, XSIZE, YSIZE/12*5));
+      }
    }
    
    public void setBoundaries(Character c)
@@ -118,6 +137,11 @@ public class Panel extends JPanel implements KeyListener
             location = EHALL;
             c.setX(XSIZE - c.getWidth()*2);
             c.setY(YSIZE/2);
+         }
+         if(c.getX() >= XSIZE/4 && c.getX() <= XSIZE/4*3 && c.getY() <=0){
+            location = FHALL;
+            c.setX(XSIZE/2);
+            c.setY(YSIZE-PLAYER_HEIGHT);
          }
          if(c.getY() <= 0)
             c.setY(0);
@@ -139,6 +163,16 @@ public class Panel extends JPanel implements KeyListener
          }
          if(c.getY() >= YSIZE-c.getHeight())
             c.setY(YSIZE-c.getHeight());
+      }
+      if(location == FHALL)
+      {
+         if(c.getY() > YSIZE-PLAYER_HEIGHT){
+            location = LOBBY;
+            c.setY(0);
+         }
+         if(c.getY() <= 0)
+            c.setY(0);
+         
       }
    }
    
