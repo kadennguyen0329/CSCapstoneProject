@@ -6,13 +6,15 @@ public class Entity
    private int y;
    private int height;
    private int width;
+   private int speed;
    
-   public Entity(int xCoord, int yCoord, int w, int h, String imageFileName)
+   public Entity(int xCoord, int yCoord, int w, int h, int speed1, String imageFileName)
    {
       x = xCoord;
       y = yCoord;
       height = h;
       width = w;
+      speed = speed1;
       frame = new ImageIcon(imageFileName);
    }
    
@@ -59,6 +61,10 @@ public class Entity
    public void moveY(int spaces)
    {
       y += spaces;
+   }
+   
+   public int getSpeed(){
+      return speed;
    }
    
    public String toString()
