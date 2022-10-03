@@ -48,16 +48,16 @@ public class Panel extends JPanel implements KeyListener
    
    public void movePlayer()
    {
-      if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()))
+      if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed()))
          mainPlayer.moveY(-mainPlayer.getSpeed());
          
-      else if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
+      else if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
          mainPlayer.moveY(mainPlayer.getSpeed()); 
              
       if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
          mainPlayer.moveX(-mainPlayer.getSpeed());
          
-      else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed(), mainPlayer.getY()))
+      else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
          mainPlayer.moveX(mainPlayer.getSpeed());
    }
    
@@ -73,14 +73,23 @@ public class Panel extends JPanel implements KeyListener
       {
          ImageIcon pic = new ImageIcon("images/lobby.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
-         g.setColor(Color.orange);
-         for(Rectangle r:obstacles)
-            g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         if(obstacles == null){
+            Color myColor = new Color(0, 0, 0, 0);
+            g.setColor(myColor);
+            for(Rectangle r:obstacles)
+               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         }
       }
       else if(location == EHALL)
       {
          ImageIcon pic = new ImageIcon("images/eHall.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+         if(obstacles == null){
+            Color myColor = new Color(0, 0, 0, 0);
+            g.setColor(myColor);
+            for(Rectangle r:obstacles)
+               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         }
       }
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
@@ -89,7 +98,10 @@ public class Panel extends JPanel implements KeyListener
    {
       if(location == LOBBY)
       {
-         obstacles.add(new Rectangle(100, 100, 100, 100));
+         for(int i=0; i<obstacles.size(); i++){
+            obstacles.remove(i);
+         }
+         obstacles.add(new Rectangle(0, YSIZE/8*2, XSIZE/64*17, YSIZE));
          if(c.getX() <= 0){
             location = EHALL;
             c.setX(XSIZE - c.getWidth()*2);
@@ -104,6 +116,11 @@ public class Panel extends JPanel implements KeyListener
       }
       if(location == EHALL)
       {
+         for(int i=0; i<obstacles.size(); i++){
+            obstacles.remove(i);
+         }
+         obstacles.add(new Rectangle(0, 0, XSIZE, YSIZE/5));
+         obstacles.add(new Rectangle(0, YSIZE/40*29, XSIZE, YSIZE/3));
          if(c.getX() <= 0)
             c.setX(0);
          if(c.getY() <= 0)
@@ -117,6 +134,7 @@ public class Panel extends JPanel implements KeyListener
             c.setY(YSIZE-c.getHeight());
       }
    }
+   
    
    public static double distance(int x1, int y1, int x2, int y2){
       return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
