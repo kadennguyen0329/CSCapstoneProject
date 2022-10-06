@@ -30,6 +30,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int defaultSpeed = 4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
+   public static final Color obstacleColor = new Color(10, 10, 10, 200);
    
    public static int location;
    public static int frames;
@@ -76,50 +77,32 @@ public class Panel extends JPanel implements KeyListener
       {
          ImageIcon pic = new ImageIcon("images/lobby.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
-         if(obstacles == null){
-            Color myColor = new Color(0, 0, 0, 0);
-            g.setColor(myColor);
-            for(Rectangle r:obstacles)
-               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
-         }
       }
       else if(location == EHALL)
       {
          ImageIcon pic = new ImageIcon("images/eHall.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
-         if(obstacles == null){
-            Color myColor = new Color(0, 0, 0, 0);
-            g.setColor(myColor);
-            for(Rectangle r:obstacles)
-               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
-         }
       }
       else if(location == FHALL)
       {
          ImageIcon pic = new ImageIcon("images/fHall.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
-        if(obstacles == null){
-            Color myColor = new Color(0, 0, 0, 0);
-            g.setColor(myColor);
-            for(Rectangle r:obstacles)
-               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
-         }
-         
       }
       else if(location == CAFEA)
       {
          ImageIcon pic = new ImageIcon("images/cafeA.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
-        if(obstacles == null){
-            Color myColor = new Color(0, 0, 0, 0);
-            g.setColor(myColor);
-            for(Rectangle r:obstacles)
-               g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
-         }
-         
       }
+      //seeObstacles(g);
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
    }      
+   
+   private void seeObstacles(Graphics g)
+   {
+      g.setColor(obstacleColor);
+      for(Rectangle r:obstacles)
+         g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+   }
    
    public void setWalls()
    {
@@ -127,18 +110,31 @@ public class Panel extends JPanel implements KeyListener
          obstacles.remove(i);
       if(location == LOBBY)
       {
-         obstacles.add(new Rectangle(0, YSIZE/8*2, XSIZE/64*17, YSIZE));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(19.0/75)), (int)(XSIZE*(33.0/120)), YSIZE-((int)(YSIZE*(19.0/75)))));
+         obstacles.add(new Rectangle((int)(XSIZE*(101.0/120)), (int)(YSIZE*(17.0/75)), XSIZE-((int)(XSIZE*(101.0/120))), YSIZE-((int)(YSIZE*(17.0/75)))));
       }
       else if(location == EHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, YSIZE/5));
-         obstacles.add(new Rectangle(0, YSIZE/40*29, XSIZE, YSIZE/3));
+         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == FHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE/128*35, YSIZE));
-         obstacles.add(new Rectangle(XSIZE/64*53, 0, XSIZE, YSIZE/5));
-         obstacles.add(new Rectangle(XSIZE/64*53, YSIZE/36*13, XSIZE, YSIZE/12*5));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(33.0/120)), YSIZE));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0, XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(16.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(99.0/120)), (int)(YSIZE*(27.0/75)), XSIZE-(int)(XSIZE*(99.0/120)), (int)(YSIZE*(32.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(100.0/120)), (int)(YSIZE*(70.0/75)), XSIZE-(int)(XSIZE*(100.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
+      }
+      else if(location == CAFEA)
+      {
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(31.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(26.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(60.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(58.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(26.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
       }
    }
    
@@ -200,6 +196,13 @@ public class Panel extends JPanel implements KeyListener
             c.setY(YSIZE/5*4);
             c.setX(XSIZE-PLAYER_WIDTH);
          }
+         if(c.getY() <= 0)
+            c.setY(0);
+         if(c.getX() >= XSIZE-c.getWidth())
+            c.setX(XSIZE-c.getWidth());
+         if(c.getY() >= YSIZE-c.getHeight())
+            c.setY(YSIZE-c.getHeight());
+      
       }
    }
    
@@ -215,6 +218,8 @@ public class Panel extends JPanel implements KeyListener
       }
       return false;
    }
+   
+   
    
    public void keyTyped(KeyEvent e) //methods called when key is typed
    {
