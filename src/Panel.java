@@ -219,8 +219,6 @@ public class Panel extends JPanel implements KeyListener
       return false;
    }
    
-   
-   
    public void keyTyped(KeyEvent e) //methods called when key is typed
    {
       
@@ -242,7 +240,6 @@ public class Panel extends JPanel implements KeyListener
    {
       public void actionPerformed(ActionEvent e) //methods called every frame
       {
-         
          movePlayer();
          if(frames > 100)
             setBoundaries(mainPlayer);
