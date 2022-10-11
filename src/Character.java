@@ -4,7 +4,7 @@ public class Character extends Entity
    private int strength;
    private String name;
    
-   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, String name1, int health1, int speed1, int strength1)
+   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, int health1, int speed1, int strength1, String name1)
    {
       super(xCoord, yCoord, w, h, speed1, imageFileName);
       name = name1;
@@ -17,8 +17,6 @@ public class Character extends Entity
       return health;
    }
    
-   
-   
    public int getStrength(){
       return strength;
    }
@@ -28,4 +26,3 @@ public class Character extends Entity
    }
    
   }
-

@@ -25,9 +25,10 @@ public class Panel extends JPanel implements KeyListener
    public static final int FHALL = 3;
    public static final int CAFEA = 4;
    public static final int CAFEB = 5;
+   public static final int END = 6;
    
    public static Character mainPlayer;
-   public static final int defaultSpeed = 4;
+   public static final int defaultSpeed = 8;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(10, 10, 10, 200);
@@ -39,6 +40,7 @@ public class Panel extends JPanel implements KeyListener
    private static HashSet<Integer> pressedKeys;
    
    private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>();
+   private ArrayList<Character> enemies = new ArrayList<Character>();
     
    public Panel()
    {
@@ -47,7 +49,9 @@ public class Panel extends JPanel implements KeyListener
       pressedKeys = new HashSet<Integer>();
       location = LOBBY;
       frames = 0;
-      mainPlayer = new Character(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", "Kaden", 100, defaultSpeed, 1);
+      mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
+      enemies.add(new Enemy(XSIZE/2, YSIZE/4, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Cooley"));
+      
    }
    
    public void movePlayer()
@@ -63,6 +67,14 @@ public class Panel extends JPanel implements KeyListener
          
       else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
          mainPlayer.moveX(mainPlayer.getSpeed());
+      
+      
+      if(checkEnemyCollisions())
+         for(int i=0; i<enemies.size(); i++){
+            enemies.remove(i);
+            location = END;
+         }
+   
    }
    
    public void paintComponent(Graphics g)
@@ -93,8 +105,17 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/cafeA.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == END)
+      {
+         ImageIcon pic = new ImageIcon("images/End.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       //seeObstacles(g);
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
+      for(Character enemy: enemies){
+         g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
+      }
+   
    }      
    
    private void seeObstacles(Graphics g)
@@ -211,6 +232,21 @@ public class Panel extends JPanel implements KeyListener
       return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
    }
    
+   
+   //returns true if playerX,playerY has collided with an enemy
+   public boolean checkEnemyCollisions()
+   {
+      for(Character enemy: enemies)
+      {
+         int ex = enemy.getX();
+         int ey = enemy.getY();
+         if(distance(ex, ey, mainPlayer.getX(), mainPlayer.getY()) < PLAYER_HEIGHT && Math.abs(ex-mainPlayer.getX()) < PLAYER_WIDTH)
+            return true;
+      }
+      return false;
+   }
+   
+   
    public boolean checkObstacleCollisions(int x, int y){
       for(Rectangle r: obstacles){
          if(r.contains(x, y))
@@ -248,6 +284,7 @@ public class Panel extends JPanel implements KeyListener
             setBoundaries(mainPlayer);
          repaint();
          frames++;
+         
       }
    }
 }
