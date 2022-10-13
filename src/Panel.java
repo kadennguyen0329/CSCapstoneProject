@@ -28,7 +28,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int END = 6;
    
    public static Character mainPlayer;
-   public static final int defaultSpeed = 8;
+   public static final int defaultSpeed = 15;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(10, 10, 10, 200);
@@ -105,6 +105,11 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/cafeA.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == CAFEB)
+      {
+         ImageIcon pic = new ImageIcon("images/cafeB.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       else if(location == END)
       {
          ImageIcon pic = new ImageIcon("images/End.png");
@@ -150,12 +155,21 @@ public class Panel extends JPanel implements KeyListener
       {
          obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(31.0/75))));
          obstacles.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(26.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(60.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(12.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(9.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(58.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(26.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(9.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(9.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(61.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(8.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(59.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(93.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+      }
+      else if(location == CAFEB)
+      {
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(4.0/120)), (int)(YSIZE*(30.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(75.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
       }
    }
    
@@ -206,15 +220,19 @@ public class Panel extends JPanel implements KeyListener
             c.setY(YSIZE/2);
             c.setX(0);
          }
+         if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() < YSIZE/2){
+            location = CAFEB;
+            c.setY(YSIZE/2);
+            c.setX(0);
+         }
          if(c.getY() <= 0)
             c.setY(0);
-         
       }
       if(location == CAFEA)
       {
          if(c.getX() < 0){
             location = FHALL;
-            c.setY(YSIZE/5*4);
+            c.setY((int)(YSIZE*(64.0/75)));
             c.setX(XSIZE-PLAYER_WIDTH);
          }
          if(c.getY() <= 0)
@@ -223,7 +241,20 @@ public class Panel extends JPanel implements KeyListener
             c.setX(XSIZE-c.getWidth());
          if(c.getY() >= YSIZE-c.getHeight())
             c.setY(YSIZE-c.getHeight());
-      
+      }
+      if(location == CAFEB)
+      {
+         if(c.getX() < 0){
+            location = FHALL;
+            c.setY((int)(YSIZE*(20.0/75)));
+            c.setX(XSIZE-PLAYER_WIDTH);
+         }
+         if(c.getY() <= 0)
+            c.setY(0);
+         if(c.getX() >= XSIZE-c.getWidth())
+            c.setX(XSIZE-c.getWidth());
+         if(c.getY() >= YSIZE-c.getHeight())
+            c.setY(YSIZE-c.getHeight());
       }
    }
    
