@@ -174,6 +174,7 @@ public class Panel extends JPanel implements KeyListener
       else if(location == END)
       {
          obstacles.add(new Rectangle((int)(XSIZE*(6.0/120)), (int)(YSIZE*(61.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(10.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(59.0/75)), (int)(XSIZE*(27.0/120)), (int)(YSIZE*(12.0/75))));
          
          if(checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed())){
             if(mainPlayer.getX()<XSIZE/2){
@@ -206,15 +207,16 @@ public class Panel extends JPanel implements KeyListener
                System.exit(1);
          }
          else if(checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT)){
-            location = LOBBY;
-            frames = 0;
-            mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-            enemies.add(new Enemy(XSIZE/2, YSIZE/4, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Cooley"));     
-         }
-         else
-            System.exit(1);
+            if(mainPlayer.getX()<XSIZE/2){
+               location = LOBBY;
+               frames = 0;
+               mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
+               enemies.add(new Enemy(XSIZE/2, YSIZE/4, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Cooley"));     
+            }
+            else
+               System.exit(1);
            
-       
+         }
       }
    }
    
