@@ -32,6 +32,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(10, 10, 10, 200);
+   public static int hallMonitorStage;
    
    public static int location;
    public static int frames;
@@ -49,10 +50,43 @@ public class Panel extends JPanel implements KeyListener
       pressedKeys = new HashSet<Integer>();
       location = LOBBY;
       frames = 0;
+      hallMonitorStage = 0;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-      enemies.add(new Enemy(XSIZE/2, YSIZE/4, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Cooley"));
-      
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor"));
    }
+   
+   public void hallMonitorMovement()
+   {
+      if(location == LOBBY && enemies.size() != 0)
+      {
+         if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(90.0/120)))
+         {
+            enemies.get(0).moveX(enemies.get(0).getSpeed());
+         }
+         else if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))) && hallMonitorStage == 0)
+            hallMonitorStage = 1;
+         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+         }
+         else if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))) && hallMonitorStage == 1)
+            hallMonitorStage = 2;
+         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+         }
+         else if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))) && hallMonitorStage == 2)
+            hallMonitorStage = 3;
+         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(8.0/75)))
+         {
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+         }
+         else if((enemies.get(0).getY() <= (int)(YSIZE*(8.0/75))) && hallMonitorStage == 3)
+            hallMonitorStage = 0;
+         
+      }
+   }
+   
    
    public void movePlayer()
    {
@@ -175,86 +209,89 @@ public class Panel extends JPanel implements KeyListener
    
    public void setBoundaries(Character c)
    {
-      setWalls();
-      if(location == LOBBY)
+      if(c != null)
       {
-         if(c.getX() <= 0){
-            location = EHALL;
-            c.setX(XSIZE - c.getWidth()*2);
-            c.setY(YSIZE/2);
+         setWalls();
+         if(location == LOBBY)
+         {
+            if(c.getX() <= 0){
+               location = EHALL;
+               c.setX(XSIZE - c.getWidth()*2);
+               c.setY(YSIZE/2);
+            }
+            if(c.getX() >= XSIZE/4 && c.getX() <= XSIZE/4*3 && c.getY() <=0){
+               location = FHALL;
+               c.setX(XSIZE/2);
+               c.setY(YSIZE-PLAYER_HEIGHT);
+            }
+            if(c.getY() <= 0)
+               c.setY(0);
+            if(c.getX() >= XSIZE-c.getWidth())
+               c.setX(XSIZE-c.getWidth());
+            if(c.getY() >= YSIZE-c.getHeight())
+               c.setY(YSIZE-c.getHeight());
          }
-         if(c.getX() >= XSIZE/4 && c.getX() <= XSIZE/4*3 && c.getY() <=0){
-            location = FHALL;
-            c.setX(XSIZE/2);
-            c.setY(YSIZE-PLAYER_HEIGHT);
+         if(location == EHALL)
+         {
+            if(c.getX() <= 0)
+               c.setX(0);
+            if(c.getY() <= 0)
+               c.setY(0);
+            if(c.getX() >= XSIZE-c.getWidth()){
+               location = LOBBY;
+               c.setX(c.getWidth());
+               c.setY(YSIZE - ((YSIZE/9)*8));
+            }
+            if(c.getY() >= YSIZE-c.getHeight())
+               c.setY(YSIZE-c.getHeight());
          }
-         if(c.getY() <= 0)
-            c.setY(0);
-         if(c.getX() >= XSIZE-c.getWidth())
-            c.setX(XSIZE-c.getWidth());
-         if(c.getY() >= YSIZE-c.getHeight())
-            c.setY(YSIZE-c.getHeight());
-      }
-      if(location == EHALL)
-      {
-         if(c.getX() <= 0)
-            c.setX(0);
-         if(c.getY() <= 0)
-            c.setY(0);
-         if(c.getX() >= XSIZE-c.getWidth()){
-            location = LOBBY;
-            c.setX(c.getWidth());
-            c.setY(YSIZE - ((YSIZE/9)*8));
+         if(location == FHALL)
+         {
+            if(c.getY() > YSIZE-PLAYER_HEIGHT){
+               location = LOBBY;
+               c.setY(0);
+            }
+            if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() > YSIZE/2){
+               location = CAFEA;
+               c.setY(YSIZE/2);
+               c.setX(0);
+            }
+            if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() < YSIZE/2){
+               location = CAFEB;
+               c.setY(YSIZE/2);
+               c.setX(0);
+            }
+            if(c.getY() <= 0)
+               c.setY(0);
          }
-         if(c.getY() >= YSIZE-c.getHeight())
-            c.setY(YSIZE-c.getHeight());
-      }
-      if(location == FHALL)
-      {
-         if(c.getY() > YSIZE-PLAYER_HEIGHT){
-            location = LOBBY;
-            c.setY(0);
+         if(location == CAFEA)
+         {
+            if(c.getX() < 0){
+               location = FHALL;
+               c.setY((int)(YSIZE*(64.0/75)));
+               c.setX(XSIZE-PLAYER_WIDTH);
+            }
+            if(c.getY() <= 0)
+               c.setY(0);
+            if(c.getX() >= XSIZE-c.getWidth())
+               c.setX(XSIZE-c.getWidth());
+            if(c.getY() >= YSIZE-c.getHeight())
+               c.setY(YSIZE-c.getHeight());
          }
-         if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() > YSIZE/2){
-            location = CAFEA;
-            c.setY(YSIZE/2);
-            c.setX(0);
+         if(location == CAFEB)
+         {
+            if(c.getX() < 0){
+               location = FHALL;
+               c.setY((int)(YSIZE*(20.0/75)));
+               c.setX(XSIZE-PLAYER_WIDTH);
+            }
+            if(c.getY() <= 0)
+               c.setY(0);
+            if(c.getX() >= XSIZE-c.getWidth())
+               c.setX(XSIZE-c.getWidth());
+            if(c.getY() >= YSIZE-c.getHeight())
+               c.setY(YSIZE-c.getHeight());
          }
-         if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() < YSIZE/2){
-            location = CAFEB;
-            c.setY(YSIZE/2);
-            c.setX(0);
-         }
-         if(c.getY() <= 0)
-            c.setY(0);
-      }
-      if(location == CAFEA)
-      {
-         if(c.getX() < 0){
-            location = FHALL;
-            c.setY((int)(YSIZE*(64.0/75)));
-            c.setX(XSIZE-PLAYER_WIDTH);
-         }
-         if(c.getY() <= 0)
-            c.setY(0);
-         if(c.getX() >= XSIZE-c.getWidth())
-            c.setX(XSIZE-c.getWidth());
-         if(c.getY() >= YSIZE-c.getHeight())
-            c.setY(YSIZE-c.getHeight());
-      }
-      if(location == CAFEB)
-      {
-         if(c.getX() < 0){
-            location = FHALL;
-            c.setY((int)(YSIZE*(20.0/75)));
-            c.setX(XSIZE-PLAYER_WIDTH);
-         }
-         if(c.getY() <= 0)
-            c.setY(0);
-         if(c.getX() >= XSIZE-c.getWidth())
-            c.setX(XSIZE-c.getWidth());
-         if(c.getY() >= YSIZE-c.getHeight())
-            c.setY(YSIZE-c.getHeight());
       }
    }
    
@@ -308,8 +345,8 @@ public class Panel extends JPanel implements KeyListener
       public void actionPerformed(ActionEvent e) //methods called every frame
       {
          movePlayer();
-         if(frames > 100)
-            setBoundaries(mainPlayer);
+         setBoundaries(mainPlayer);
+         hallMonitorMovement(); 
          repaint();
          frames++;
          
