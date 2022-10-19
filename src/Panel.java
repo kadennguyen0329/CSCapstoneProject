@@ -110,6 +110,7 @@ public class Panel extends JPanel implements KeyListener
             mainPlayer.setX(XSIZE/2);
             mainPlayer.setY(YSIZE/2);
             location = END;
+            Sound.randomNote();
          }
    
    }
@@ -212,7 +213,6 @@ public class Panel extends JPanel implements KeyListener
       {
          obstacles.add(new Rectangle((int)(XSIZE*(6.0/120)), (int)(YSIZE*(61.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(10.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(59.0/75)), (int)(XSIZE*(27.0/120)), (int)(YSIZE*(12.0/75))));
-         Sound.randomNote();
          
          if(checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed())){
             
