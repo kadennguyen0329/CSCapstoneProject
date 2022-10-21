@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
    
-public class Panel extends JPanel implements KeyListener
+public class Panel2 extends JPanel implements KeyListener
 {
    public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
    public static final int XSIZE = (int) size.getWidth();
@@ -44,7 +44,7 @@ public class Panel extends JPanel implements KeyListener
    private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>();
    private ArrayList<Character> enemies = new ArrayList<Character>();
     
-   public Panel()
+   public Panel2()
    {
       t = new Timer(1, new Listener());
       t.start();
@@ -55,7 +55,7 @@ public class Panel extends JPanel implements KeyListener
       hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor"));
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));
    }
    
    public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
@@ -70,56 +70,14 @@ public class Panel extends JPanel implements KeyListener
             enemies.get(0).setY((int)(YSIZE*(15.0/75)));
             hasMovedHallMonitor = true;
          }
-      
-         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(90.0/120)))
-         {
+         if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
-               hallMonitorStage = 1;
-         }
-            
-         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
-         {
-            enemies.get(0).moveY(enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
-               hallMonitorStage = 2;
-         }
-         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
-         {
+          if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
-               hallMonitorStage = 3;
-         }
-         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
-         {
+          if(enemies.get(0).getY() > mainPlayer.getY())
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
-               hallMonitorStage = 4;
-         }
-         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
-               hallMonitorStage = 5;
-         }
-         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
-         {
-            enemies.get(0).moveY(enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
-               hallMonitorStage = 6;
-         }
-         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
-               hallMonitorStage = 7;
-         }
-         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
-         {
-            enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
-               hallMonitorStage = 0;
-         }
+          if(enemies.get(0).getY() < mainPlayer.getY())
+            enemies.get(0).moveY(enemies.get(0).getSpeed());  
       }
       else if(location == EHALL && enemies.size() != 0)
       {
@@ -129,18 +87,14 @@ public class Panel extends JPanel implements KeyListener
             enemies.get(0).setY((int)(YSIZE*(32.0/75)));
             hasMovedHallMonitor = true;
          }
-         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(108.0/120)))
-         {
+         if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() >= (int)(XSIZE*(108.0/120))))
-               hallMonitorStage = 1;
-         }
-         else if(hallMonitorStage == 1 & enemies.get(0).getX() > (int)(XSIZE*(8.0/120)))
-         {
+          if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(8.0/120))))
-               hallMonitorStage = 0;
-         }
+          if(enemies.get(0).getY() > mainPlayer.getY())
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+          if(enemies.get(0).getY() < mainPlayer.getY())
+            enemies.get(0).moveY(enemies.get(0).getSpeed()); 
       }
       if(location == FHALL && enemies.size() != 0)
       {
@@ -150,55 +104,14 @@ public class Panel extends JPanel implements KeyListener
             enemies.get(0).setY((int)(YSIZE*(8.0/75)));
             hasMovedHallMonitor = true;
          }
-         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(90.0/120)))
-         {
+         if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
-               hallMonitorStage = 1;
-         }
-            
-         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
-         {
-            enemies.get(0).moveY(enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
-               hallMonitorStage = 2;
-         }
-         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
-         {
+          if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
-               hallMonitorStage = 3;
-         }
-         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(8.0/75)))
-         {
+          if(enemies.get(0).getY() > mainPlayer.getY())
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(8.0/75))))
-               hallMonitorStage = 4;
-         }
-         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
-               hallMonitorStage = 5;
-         }
-         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
-         {
-            enemies.get(0).moveY(enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
-               hallMonitorStage = 6;
-         }
-         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
-               hallMonitorStage = 7;
-         }
-         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(8.0/75)))
-         {
-            enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(8.0/75))))
-               hallMonitorStage = 0;
-         }
+          if(enemies.get(0).getY() < mainPlayer.getY())
+            enemies.get(0).moveY(enemies.get(0).getSpeed());  
       }
       if(location == CAFEB || location == CAFEA)
       {
