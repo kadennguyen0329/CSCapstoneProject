@@ -253,7 +253,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor"));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));
                Sound.silence();
             }
             else
@@ -264,7 +264,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor"));           
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));           
                Sound.silence();
             }
             else
@@ -275,7 +275,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor")); 
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor")); 
                Sound.silence();
             }
             else
@@ -286,7 +286,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed, 1, "Hall Monitor"));     
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));     
                Sound.silence();
             }
             else
