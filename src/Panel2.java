@@ -108,7 +108,7 @@ public class Panel2 extends JPanel implements KeyListener
          if(enemies.get(0).getY() < mainPlayer.getY())
             enemies.get(0).moveY(enemies.get(0).getSpeed()); 
       }
-      if(location == FHALL && enemies.size() != 0)
+      if((location == FHALL || location == FHALL2) && enemies.size() != 0)
       {
          if(!hasMovedHallMonitor)
          {
@@ -500,8 +500,11 @@ public class Panel2 extends JPanel implements KeyListener
                c.setY(YSIZE/2);
                c.setX(0);
             }
-            if(c.getY() <= 0)
-               c.setY(0);
+            if(c.getY() < 0){
+               location = FHALL2;
+               resetHallMonitor();
+               c.setY((int)(YSIZE)-PLAYER_HEIGHT);
+            }
          }
          if(location == CAFEA)
          {
@@ -532,6 +535,14 @@ public class Panel2 extends JPanel implements KeyListener
                c.setX(XSIZE-c.getWidth());
             if(c.getY() >= YSIZE-c.getHeight())
                c.setY(YSIZE-c.getHeight());
+         }
+         if(location == FHALL2)
+         {
+            if(c.getY() > YSIZE-PLAYER_HEIGHT){
+               location = FHALL;
+               resetHallMonitor();
+               c.setY(0);
+            }
          }
       }
    }
