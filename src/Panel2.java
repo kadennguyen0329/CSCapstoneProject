@@ -61,7 +61,7 @@ public class Panel2 extends JPanel implements KeyListener
       t = new Timer(1, new Listener());
       t.start();
       pressedKeys = new HashSet<Integer>();
-      location = AHALL3;
+      location = LOBBY;
       Sound.initialize();
       frames = 0;
       hallMonitorStage = 0;
