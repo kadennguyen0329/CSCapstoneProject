@@ -191,7 +191,6 @@ public class Panel2 extends JPanel implements KeyListener
       for(Character enemy: enemies){
          g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
       }
-   
    }      
    
    private void seeObstacles(Graphics g)
@@ -242,6 +241,9 @@ public class Panel2 extends JPanel implements KeyListener
          obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
       }
+      //Nathan: aHall1, aHall2, bHall,cHall1, cHall2
+      //Kaden: dHall, fHall2, gHall, kHall, lHall
+      
       else if(location == END)
       {
          obstacles.add(new Rectangle((int)(XSIZE*(6.0/120)), (int)(YSIZE*(61.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(10.0/75))));
