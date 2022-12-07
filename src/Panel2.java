@@ -27,15 +27,16 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int CAFEB = 5;
    public static final int AHALL1 = 6;
    public static final int AHALL2 = 7;
-   public static final int BHALL = 8;
-   public static final int CHALL1 = 9;
-   public static final int CHALL2 = 10;
-   public static final int DHALL = 11;
-   public static final int FHALL2 = 12;
-   public static final int GHALL = 13;
-   public static final int KHALL = 14;
-   public static final int LHALL = 15;
-   public static final int END = 16;
+   public static final int AHALL3 = 8;
+   public static final int BHALL = 9;
+   public static final int CHALL1 = 10;
+   public static final int CHALL2 = 11;
+   public static final int DHALL = 12;
+   public static final int FHALL2 = 13;
+   public static final int GHALL = 14;
+   public static final int KHALL = 15;
+   public static final int LHALL = 16;
+   public static final int END = 17;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
@@ -60,7 +61,7 @@ public class Panel2 extends JPanel implements KeyListener
       t = new Timer(1, new Listener());
       t.start();
       pressedKeys = new HashSet<Integer>();
-      location = LOBBY;
+      location = AHALL3;
       Sound.initialize();
       frames = 0;
       hallMonitorStage = 0;
@@ -201,6 +202,16 @@ public class Panel2 extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/aHall2.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == AHALL2)
+      {
+         ImageIcon pic = new ImageIcon("images/aHall2.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == AHALL3)
+      {
+         ImageIcon pic = new ImageIcon("images/aHall3.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       else if(location == BHALL)
       {
          ImageIcon pic = new ImageIcon("images/bHall.png");
@@ -303,14 +314,19 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == AHALL1)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(21.0/75)), (int)(XSIZE*(19.0/120)), (int)(YSIZE*(33.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(66.0/75)), (int)(XSIZE*(17.0/120)), (int)(YSIZE*(11.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), 0, (int)(XSIZE*(17.0/120)), (int)(YSIZE*(5.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), (int)(YSIZE*(17.0/75)), (int)(XSIZE*(17.0/120)), (int)(YSIZE*(35.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(11.0/75))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(55.0/75)), (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), 0, (int)(XSIZE*(17.0/120)), (int)(YSIZE*(18.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(52.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(23.0/75))));
       }
-      else if(location == AHALL2)
+       else if(location == AHALL2)
+      {
+     obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(55.0/75)), (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), 0, (int)(XSIZE*(17.0/120)), (int)(YSIZE*(18.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(52.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(23.0/75))));
+      }
+      else if(location == AHALL3 )
       {
          obstacles.add(new Rectangle(0, 0, (int)(XSIZE), (int)(YSIZE*(12.0/75))));
          obstacles.add(new Rectangle(0, (int)(YSIZE*(25.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(50.0/75))));
