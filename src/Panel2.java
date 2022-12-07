@@ -191,6 +191,56 @@ public class Panel2 extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/cafeB.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == AHALL1)
+      {
+         ImageIcon pic = new ImageIcon("images/aHall1.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == AHALL2)
+      {
+         ImageIcon pic = new ImageIcon("images/aHall2.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == BHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/bHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == CHALL1)
+      {
+         ImageIcon pic = new ImageIcon("images/cHall1.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == CHALL2)
+      {
+         ImageIcon pic = new ImageIcon("images/cHall2.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == DHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/dHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == FHALL2)
+      {
+         ImageIcon pic = new ImageIcon("images/fHall2.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == GHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/gHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == KHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/kHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
+      else if(location == LHALL)
+      {
+         ImageIcon pic = new ImageIcon("images/lHall.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       else if(location == END)
       {
          ImageIcon pic = new ImageIcon("images/End.png");
