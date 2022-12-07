@@ -29,6 +29,7 @@ public class Panel2 extends JPanel implements KeyListener
    
    public static Character mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
+   public static final int enemySpeed = defaultSpeed/5;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(10, 10, 10, 200);
@@ -55,7 +56,7 @@ public class Panel2 extends JPanel implements KeyListener
       hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));
    }
    
    public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
@@ -145,7 +146,6 @@ public class Panel2 extends JPanel implements KeyListener
             location = END;
             Sound.randomNote();
          }
-   
    }
    
    public void paintComponent(Graphics g)
@@ -253,7 +253,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));
                Sound.silence();
             }
             else
@@ -264,7 +264,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));           
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));           
                Sound.silence();
             }
             else
@@ -275,7 +275,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor")); 
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor")); 
                Sound.silence();
             }
             else
@@ -286,7 +286,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, defaultSpeed/3, 1, "Hall Monitor"));     
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(XSIZE*(8.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));     
                Sound.silence();
             }
             else
