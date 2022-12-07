@@ -25,7 +25,17 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int FHALL = 3;
    public static final int CAFEA = 4;
    public static final int CAFEB = 5;
-   public static final int END = 6;
+   public static final int AHALL1 = 6;
+   public static final int AHALL2 = 7;
+   public static final int BHALL = 8;
+   public static final int CHALL1 = 9;
+   public static final int CHALL2 = 10;
+   public static final int DHALL = 11;
+   public static final int FHALL2 = 12;
+   public static final int GHALL = 13;
+   public static final int KHALL = 14;
+   public static final int LHALL = 15;
+   public static final int END = 16;
    
    public static Character mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
@@ -73,11 +83,11 @@ public class Panel2 extends JPanel implements KeyListener
          }
          if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-          if(enemies.get(0).getX() > mainPlayer.getX())
+         if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() > mainPlayer.getY())
+         if(enemies.get(0).getY() > mainPlayer.getY())
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() < mainPlayer.getY())
+         if(enemies.get(0).getY() < mainPlayer.getY())
             enemies.get(0).moveY(enemies.get(0).getSpeed());  
       }
       else if(location == EHALL && enemies.size() != 0)
@@ -90,11 +100,11 @@ public class Panel2 extends JPanel implements KeyListener
          }
          if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-          if(enemies.get(0).getX() > mainPlayer.getX())
+         if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() > mainPlayer.getY())
+         if(enemies.get(0).getY() > mainPlayer.getY())
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() < mainPlayer.getY())
+         if(enemies.get(0).getY() < mainPlayer.getY())
             enemies.get(0).moveY(enemies.get(0).getSpeed()); 
       }
       if(location == FHALL && enemies.size() != 0)
@@ -107,11 +117,11 @@ public class Panel2 extends JPanel implements KeyListener
          }
          if(enemies.get(0).getX() < mainPlayer.getX())
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-          if(enemies.get(0).getX() > mainPlayer.getX())
+         if(enemies.get(0).getX() > mainPlayer.getX())
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() > mainPlayer.getY())
+         if(enemies.get(0).getY() > mainPlayer.getY())
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-          if(enemies.get(0).getY() < mainPlayer.getY())
+         if(enemies.get(0).getY() < mainPlayer.getY())
             enemies.get(0).moveY(enemies.get(0).getSpeed());  
       }
       if(location == CAFEB || location == CAFEA)
@@ -240,6 +250,12 @@ public class Panel2 extends JPanel implements KeyListener
          obstacles.add(new Rectangle((int)(XSIZE*(75.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+      }
+      else if(location == AHALL1)
+      {
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(21.0/75)), (int)(XSIZE*(19.0/120)), (int)(YSIZE*(33.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(11.0/75))));
       }
       //Nathan: aHall1, aHall2, bHall,cHall1, cHall2
       //Kaden: dHall, fHall2, gHall, kHall, lHall
