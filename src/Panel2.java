@@ -505,6 +505,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = FHALL2;
                resetHallMonitor();
                c.setY((int)(YSIZE)-PLAYER_HEIGHT);
+               c.setX(XSIZE/2);
             }
          }
          if(location == CAFEA)
@@ -543,6 +544,40 @@ public class Panel2 extends JPanel implements KeyListener
                location = FHALL;
                resetHallMonitor();
                c.setY(0);
+            }
+            if(c.getX() < 0 && c.getY() < YSIZE/2)
+            {
+               location = LHALL;
+               resetHallMonitor();
+               c.setX(XSIZE);
+               c.setY(YSIZE/2);
+            }
+            if(c.getX() < 0 && c.getY() > YSIZE/2)
+            {
+               location = GHALL;
+               resetHallMonitor();
+               c.setX(XSIZE);
+               c.setY(YSIZE/2);
+            }
+         }
+         if(location == LHALL)
+         {
+            if(c.getX() > XSIZE)
+            {
+            location = FHALL2;
+            resetHallMonitor();
+            c.setX(0);
+            c.setY(YSIZE*10/75);
+            }
+         }
+         if(location == GHALL)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = FHALL2;
+               resetHallMonitor();
+               c.setX(0);
+               c.setY(YSIZE*65/75);
             }
          }
       }
