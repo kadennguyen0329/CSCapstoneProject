@@ -61,7 +61,7 @@ public class Panel2 extends JPanel implements KeyListener
       t = new Timer(1, new Listener());
       t.start();
       pressedKeys = new HashSet<Integer>();
-      location = 6;
+      location = LOBBY;
       Sound.initialize();
       frames = 0;
       hallMonitorStage = 0;
@@ -577,7 +577,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = FHALL2;
                resetHallMonitor();
                c.setX(0);
-               c.setY(YSIZE*65/75);
+               c.setY(YSIZE*62/75);
             }
          }
       }
