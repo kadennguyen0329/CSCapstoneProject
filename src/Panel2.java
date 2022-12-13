@@ -61,7 +61,7 @@ public class Panel2 extends JPanel implements KeyListener
       t = new Timer(1, new Listener());
       t.start();
       pressedKeys = new HashSet<Integer>();
-      location = LOBBY;
+      location = 6;
       Sound.initialize();
       frames = 0;
       hallMonitorStage = 0;
@@ -278,7 +278,7 @@ public class Panel2 extends JPanel implements KeyListener
       if(location == LOBBY)
       {
          obstacles.add(new Rectangle(0, (int)(YSIZE*(19.0/75)), (int)(XSIZE*(32.0/120)), YSIZE-((int)(YSIZE*(19.0/75)))));
-          obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(32.0/120)), ((int)(YSIZE*(2.0/75)))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(32.0/120)), ((int)(YSIZE*(2.0/75)))));
          obstacles.add(new Rectangle((int)(XSIZE*(102.0/120)), (int)(YSIZE*(17.0/75)), XSIZE-((int)(XSIZE*(101.0/120))), YSIZE-((int)(YSIZE*(17.0/75)))));
          obstacles.add(new Rectangle((int)(XSIZE*(102.0/120)), 0, XSIZE-(int)(XSIZE*(102.0/120)), ((int)(YSIZE*(2.0/75)))));
       }
@@ -291,8 +291,8 @@ public class Panel2 extends JPanel implements KeyListener
       {
          obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(33.0/120)), YSIZE));
          obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0, XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(16.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(99.0/120)), (int)(YSIZE*(27.0/75)), XSIZE-(int)(XSIZE*(99.0/120)), (int)(YSIZE*(32.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(100.0/120)), (int)(YSIZE*(70.0/75)), XSIZE-(int)(XSIZE*(100.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(27.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(32.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(70.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
       }
       else if(location == CAFEA)
       {
@@ -359,8 +359,8 @@ public class Panel2 extends JPanel implements KeyListener
       else if(location == FHALL2)
       {
          obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(4.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(17.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(44.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(71.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(4.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(17.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(41.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(70.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(5.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(83.0/120)), 0, (int)(XSIZE*(837.0/120)), YSIZE));
       }
       else if(location == GHALL)
