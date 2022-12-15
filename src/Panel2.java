@@ -647,7 +647,101 @@ public class Panel2 extends JPanel implements KeyListener
                resetHallMonitor();
                c.setX(0);
             }
+            if(c.getX() < 0)
+            {
+               location = CHALL1;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
          }
+         if(location == CHALL1)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = DHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getY() < 0)
+            {
+               location = CHALL2;
+               resetHallMonitor();
+               c.setY(YSIZE);
+            }
+         }
+         if(location == CHALL2)
+         {
+            if(c.getX() > XSIZE && c.getY() < YSIZE/2)
+            {
+               location = KHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() > XSIZE && c.getY() > YSIZE/2)
+            {
+               location = BHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getY() > YSIZE)
+            {
+               location = CHALL1;
+               resetHallMonitor();
+               c.setY(0);
+            }
+         }
+         if(location == BHALL)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = AHALL2;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() < 0)
+            {
+               location = CHALL2;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+         } 
+         if(location == KHALL)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = AHALL3;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() < 0)
+            {
+               location = CHALL2;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+         }
+         if(location == AHALL3)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = LHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() < 0)
+            {
+               location = KHALL;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+            if(c.getY() > YSIZE)
+            {
+               location = AHALL2;
+               resetHallMonitor();
+               c.setY(0);
+            }  
+         }
+
       }
    }
    
