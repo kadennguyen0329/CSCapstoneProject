@@ -40,7 +40,7 @@ public class Panel2 extends JPanel implements KeyListener
    
    public static Character mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = 0;
+   public static final int enemySpeed = 0; //defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(255, 0, 0, 60);
@@ -469,10 +469,6 @@ public class Panel2 extends JPanel implements KeyListener
          }
          if(location == EHALL)
          {
-            if(c.getX() <= 0)
-               c.setX(0);
-            if(c.getY() <= 0)
-               c.setY(0);
             if(c.getX() >= XSIZE-c.getWidth()){
                location = LOBBY;
                resetHallMonitor();
@@ -481,6 +477,14 @@ public class Panel2 extends JPanel implements KeyListener
             }
             if(c.getY() >= YSIZE-c.getHeight())
                c.setY(YSIZE-c.getHeight());
+               
+            if(c.getX() < 0)
+            {
+               location = AHALL1;
+               resetHallMonitor();
+               c.setX(XSIZE);
+               c.setY(YSIZE/2);
+            }
          }
          if(location == FHALL)
          {
@@ -564,10 +568,10 @@ public class Panel2 extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-            location = FHALL2;
-            resetHallMonitor();
-            c.setX(0);
-            c.setY(YSIZE*10/75);
+               location = FHALL2;
+               resetHallMonitor();
+               c.setX(0);
+               c.setY(YSIZE*10/75);
             }
          }
          if(location == GHALL)
@@ -578,6 +582,70 @@ public class Panel2 extends JPanel implements KeyListener
                resetHallMonitor();
                c.setX(0);
                c.setY(YSIZE*62/75);
+            }
+            if(c.getX() < 0)
+            {
+               location = AHALL2;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+         }
+         if(location == AHALL2)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = GHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() < 0)
+            {
+               location = BHALL;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+            if(c.getY() < 0)
+            {
+               location = AHALL3;
+               resetHallMonitor();
+               c.setY(YSIZE);
+            }
+            if(c.getY() > YSIZE)
+            {
+               location = AHALL1;
+               resetHallMonitor();
+               c.setY(0);
+            }
+         }
+         if(location == AHALL1)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = EHALL;
+               resetHallMonitor();
+               c.setX(0);
+            }
+            if(c.getX() < 0)
+            {
+               location = DHALL;
+               resetHallMonitor();
+               c.setX(XSIZE);
+            }
+            if(c.getY() < 0)
+            {
+               location = AHALL2;
+               resetHallMonitor();
+               c.setY(YSIZE);
+            }
+            
+         }
+         if(location == DHALL)
+         {
+            if(c.getX() > XSIZE)
+            {
+               location = AHALL1;
+               resetHallMonitor();
+               c.setX(0);
             }
          }
       }
