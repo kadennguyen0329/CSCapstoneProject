@@ -318,21 +318,22 @@ public class Panel2 extends JPanel implements KeyListener
       {
          obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), 0,  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(52.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(23.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
       }
       else if(location == AHALL2)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(55.0/75)), (int)(XSIZE*(18.0/120)), (int)(YSIZE*(22.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0, (int)(XSIZE*(17.0/120)), (int)(YSIZE*(18.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(23.0/75))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+
       }
       else if(location == AHALL3 )
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE), (int)(YSIZE*(12.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(25.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(50.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(104.0/120)), (int)(YSIZE*(26.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(49.0/75))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE), (int)(YSIZE*(14.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(26.0/75)), (int)(XSIZE*(17.0/120)), (int)(YSIZE*(50.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), (int)(YSIZE*(26.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(49.0/75))));
       }
       else if(location == BHALL)
       {
@@ -341,15 +342,9 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == CHALL1)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(55.0/120)), (int)(YSIZE)));
-         obstacles.add(new Rectangle((int)(XSIZE*(55.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(65.0/120)), (int)(YSIZE*(11.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(101/120)), 0, (int)(XSIZE*(19.0/120)), (int)(YSIZE*(49.0/75))));
-      }
-      else if(location == AHALL1)
-      {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(21.0/75)), (int)(XSIZE*(19.0/120)), (int)(YSIZE*(33.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(105.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(15.0/120)), (int)(YSIZE*(11.0/75))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(36.0/120)), (int)(YSIZE)));
+         obstacles.add(new Rectangle((int)(XSIZE*(83.0/120)), (int)(YSIZE*(0.0/75)), (int)(XSIZE*(37.0/120)), (int)(YSIZE*(48.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(36.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(84.0/120)), (int)(YSIZE*(9.0/75))));
       }
       else if(location == DHALL)
       {
@@ -380,10 +375,10 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == CHALL2)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(48.0/120)), YSIZE));
-         obstacles.add(new Rectangle(0, 0,  XSIZE, (int)(YSIZE*(2.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(16.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(37.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(72.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(6.0/75))));
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(49.0/120)), YSIZE));
+         obstacles.add(new Rectangle(0, 0,  XSIZE, (int)(YSIZE*(4.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(16.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(38.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(71.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(7.0/75))));
       }
       //Nathan: aHall1, aHall2, bHall,cHall1, cHall2
       //Kaden: dHall, fHall2, gHall, kHall, lHall
@@ -652,6 +647,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = CHALL1;
                resetHallMonitor();
                c.setX(XSIZE);
+               c.setY((int)(YSIZE*(57.0/75)));
             }
          }
          if(location == CHALL1)
@@ -661,12 +657,15 @@ public class Panel2 extends JPanel implements KeyListener
                location = DHALL;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(34.0/75)));
             }
             if(c.getY() < 0)
             {
                location = CHALL2;
                resetHallMonitor();
                c.setY(YSIZE);
+               c.setX((int)(XSIZE*(68.0/120)));
+
             }
          }
          if(location == CHALL2)
@@ -688,6 +687,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = CHALL1;
                resetHallMonitor();
                c.setY(0);
+                c.setX((int)(XSIZE*(58.0/120)));
             }
          }
          if(location == BHALL)
