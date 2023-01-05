@@ -38,9 +38,9 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int LHALL = 16;
    public static final int END = 17;
    
-   public static Character mainPlayer;
+   public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = 0; //defaultSpeed/4;
+   public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(255, 0, 0, 60);
@@ -54,7 +54,7 @@ public class Panel2 extends JPanel implements KeyListener
    private static HashSet<Integer> pressedKeys;
    
    private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>();
-   private ArrayList<Character> enemies = new ArrayList<Character>();
+   private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
    public Panel2()
    {
@@ -67,31 +67,99 @@ public class Panel2 extends JPanel implements KeyListener
       hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden");
-      enemies.add(new Enemy((int)(XSIZE*(60.0/120)), (int)(YSIZE*(70.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor"));
    }
    
    public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
    
    public void hallMonitorMovement()
    {
-      if(location == LOBBY && enemies.size() != 0)
+       
+      if(enemies.size() != 0 && distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getX(), mainPlayer.getY()) < 500)
+      {
+         hallMonitorFollow();
+         
+         if(!enemies.get(0).getIsFollowing())
+         {
+            enemies.get(0).setIsFollowing(true);
+            enemies.get(0).setPreviousX(enemies.get(0).getX());
+            enemies.get(0).setPreviousY(enemies.get(0).getY());
+         }
+      }
+      
+      else if(enemies.size() != 0 && enemies.get(0).getIsFollowing())
+      {
+         if(enemies.get(0).getIsFollowing())
+         {
+            hallMonitorReturn(enemies.get(0).getPreviousX(), enemies.get(0).getPreviousY());
+            if(enemies.get(0).getX() == enemies.get(0).getPreviousX() && enemies.get(0).getY() == enemies.get(0).getPreviousY())
+            {
+               enemies.get(0).setIsFollowing(false);
+            }
+         }
+      }
+      
+      
+      if(location == LOBBY && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
          if(!hasMovedHallMonitor)
          {
-            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
-            enemies.get(0).setY((int)(YSIZE*(70.0/75)));
+            enemies.get(0).setX((int)(XSIZE*(37.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(15.0/75)));
             hasMovedHallMonitor = true;
          }
-         if(enemies.get(0).getX() < mainPlayer.getX())
+         
+         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(90.0/120)))
+         {
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-         if(enemies.get(0).getX() > mainPlayer.getX())
+            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
+               hallMonitorStage = 1;
+         }
+            
+         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 2;
+         }
+         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
+         {
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() > mainPlayer.getY())
+            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
+               hallMonitorStage = 3;
+         }
+         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
+         {
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() < mainPlayer.getY())
-            enemies.get(0).moveY(enemies.get(0).getSpeed());  
+            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
+               hallMonitorStage = 4;
+         }
+         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
+               hallMonitorStage = 5;
+         }
+         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 6;
+         }
+         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
+               hallMonitorStage = 7;
+         }
+         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
+         {
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
+               hallMonitorStage = 0;
+         }
       }
-      else if(location == EHALL && enemies.size() != 0)
+      else if(location == EHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
          if(!hasMovedHallMonitor)
          {
@@ -99,31 +167,76 @@ public class Panel2 extends JPanel implements KeyListener
             enemies.get(0).setY((int)(YSIZE*(32.0/75)));
             hasMovedHallMonitor = true;
          }
-         if(enemies.get(0).getX() < mainPlayer.getX())
+         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(108.0/120)))
+         {
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-         if(enemies.get(0).getX() > mainPlayer.getX())
+            if((enemies.get(0).getX() >= (int)(XSIZE*(108.0/120))))
+               hallMonitorStage = 1;
+         }
+         else if(hallMonitorStage == 1 & enemies.get(0).getX() > (int)(XSIZE*(8.0/120)))
+         {
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() > mainPlayer.getY())
-            enemies.get(0).moveY(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() < mainPlayer.getY())
-            enemies.get(0).moveY(enemies.get(0).getSpeed()); 
+            if((enemies.get(0).getX() <= (int)(XSIZE*(8.0/120))))
+               hallMonitorStage = 0;
+         }
       }
-      if((location == FHALL || location == FHALL2) && enemies.size() != 0)
+      if(location == FHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
          if(!hasMovedHallMonitor)
          {
-            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
-            enemies.get(0).setY((int)(YSIZE*(33.0/75)));
+            enemies.get(0).setX((int)(XSIZE*(37.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(8.0/75)));
             hasMovedHallMonitor = true;
          }
-         if(enemies.get(0).getX() < mainPlayer.getX())
+         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(90.0/120)))
+         {
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-         if(enemies.get(0).getX() > mainPlayer.getX())
+            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
+               hallMonitorStage = 1;
+         }
+            
+         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 2;
+         }
+         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
+         {
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() > mainPlayer.getY())
+            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
+               hallMonitorStage = 3;
+         }
+         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(8.0/75)))
+         {
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-         if(enemies.get(0).getY() < mainPlayer.getY())
-            enemies.get(0).moveY(enemies.get(0).getSpeed());  
+            if((enemies.get(0).getY() <= (int)(YSIZE*(8.0/75))))
+               hallMonitorStage = 4;
+         }
+         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
+               hallMonitorStage = 5;
+         }
+         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 6;
+         }
+         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
+               hallMonitorStage = 7;
+         }
+         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(8.0/75)))
+         {
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() <= (int)(YSIZE*(8.0/75))))
+               hallMonitorStage = 0;
+         }
       }
       if(location == CAFEB || location == CAFEA)
       {
@@ -131,7 +244,35 @@ public class Panel2 extends JPanel implements KeyListener
          enemies.get(0).setY(-100);
          hasMovedHallMonitor = true;
       }
+     
    }
+
+   
+   public void hallMonitorFollow()
+   {
+      if(enemies.get(0).getX() < mainPlayer.getX())
+         enemies.get(0).moveX(enemies.get(0).getSpeed());
+      if(enemies.get(0).getX() > mainPlayer.getX())
+         enemies.get(0).moveX(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() > mainPlayer.getY())
+         enemies.get(0).moveY(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() < mainPlayer.getY())
+         enemies.get(0).moveY(enemies.get(0).getSpeed());
+   }
+   
+   public void hallMonitorReturn(int x, int y)
+   {
+      if(enemies.get(0).getX() < x)
+         enemies.get(0).moveX(enemies.get(0).getSpeed());
+      if(enemies.get(0).getX() > x)
+         enemies.get(0).moveX(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() > y)
+         enemies.get(0).moveY(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() < y)
+         enemies.get(0).moveY(enemies.get(0).getSpeed());
+   }
+  
+   
    
    
    public void movePlayer()
@@ -327,7 +468,7 @@ public class Panel2 extends JPanel implements KeyListener
          obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
          obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
-
+      
       }
       else if(location == AHALL3 )
       {
@@ -665,7 +806,7 @@ public class Panel2 extends JPanel implements KeyListener
                resetHallMonitor();
                c.setY(YSIZE);
                c.setX((int)(XSIZE*(68.0/120)));
-
+            
             }
          }
          if(location == CHALL2)
@@ -687,7 +828,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = CHALL1;
                resetHallMonitor();
                c.setY(0);
-                c.setX((int)(XSIZE*(58.0/120)));
+               c.setX((int)(XSIZE*(58.0/120)));
             }
          }
          if(location == BHALL)
@@ -741,7 +882,7 @@ public class Panel2 extends JPanel implements KeyListener
                c.setY(0);
             }  
          }
-
+      
       }
    }
    
