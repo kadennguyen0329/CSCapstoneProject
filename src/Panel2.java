@@ -477,24 +477,10 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == AHALL1)
       {
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(73.0/75)), XSIZE, YSIZE/2));
-=======
->>>>>>> Stashed changes
          walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
-<<<<<<< Updated upstream
-=======
->>>>>>> 5fbbbfb1caa71928eecab9215fbbaa710c525976
->>>>>>> Stashed changes
       }
       else if(location == AHALL2)
       {
