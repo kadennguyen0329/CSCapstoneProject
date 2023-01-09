@@ -40,7 +40,7 @@ public class Panel2 extends JPanel implements KeyListener
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = defaultSpeed/4;
+   public static final int enemySpeed = 0; //defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(255, 0, 0, 60);
@@ -477,10 +477,24 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == AHALL1)
       {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
+         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+         obstacles.add(new Rectangle(0, (int)(YSIZE*(73.0/75)), XSIZE, YSIZE/2));
+=======
+>>>>>>> Stashed changes
          walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+<<<<<<< Updated upstream
+=======
+>>>>>>> 5fbbbfb1caa71928eecab9215fbbaa710c525976
+>>>>>>> Stashed changes
       }
       else if(location == AHALL2)
       {
@@ -729,6 +743,13 @@ public class Panel2 extends JPanel implements KeyListener
                c.setX(0);
                c.setY(YSIZE*10/75);
             }
+            if(c.getX() < 0)
+            {
+               location = AHALL3;
+               resetHallMonitor();
+               c.setX(XSIZE);
+               c.setY((int)(YSIZE*(17.0/75)));               
+            }
          }
          if(location == GHALL)
          {
@@ -744,6 +765,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = AHALL2;
                resetHallMonitor();
                c.setX(XSIZE);
+               c.setY((int)(YSIZE*(32.0/75))); 
             }
          }
          if(location == AHALL2)
@@ -802,6 +824,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = AHALL1;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(32.0/75))); 
             }
             if(c.getX() < 0)
             {
@@ -836,12 +859,14 @@ public class Panel2 extends JPanel implements KeyListener
                location = KHALL;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(60.0/120)));
             }
             if(c.getX() > XSIZE && c.getY() > YSIZE/2)
             {
                location = BHALL;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(60.0/120)));
             }
             if(c.getY() > YSIZE)
             {
@@ -858,12 +883,14 @@ public class Panel2 extends JPanel implements KeyListener
                location = AHALL2;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(32.0/75))); 
             }
             if(c.getX() < 0)
             {
                location = CHALL2;
                resetHallMonitor();
                c.setX(XSIZE);
+               c.setY((int)(YSIZE*(95.0/120)));
             }
          } 
          if(location == KHALL)
@@ -879,6 +906,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = CHALL2;
                resetHallMonitor();
                c.setX(XSIZE);
+               c.setY((int)(YSIZE*(13.0/120)));
             }
          }
          if(location == AHALL3)
@@ -888,12 +916,14 @@ public class Panel2 extends JPanel implements KeyListener
                location = LHALL;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(17.0/75))); 
             }
             if(c.getX() < 0)
             {
                location = KHALL;
                resetHallMonitor();
                c.setX(XSIZE);
+               c.setY((int)(YSIZE*(17.0/75))); 
             }
             if(c.getY() > YSIZE)
             {
