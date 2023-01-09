@@ -8,14 +8,14 @@ public class Player extends Character
       
    }
    
-   public boolean getIsHiding()
+   public boolean isHiding()
    {
       return isHiding;
    }
    
-   public void switchIsHiding()
+   public void setIsHiding(boolean x)
    {
-      isHiding = !isHiding;
+      isHiding = x;
    }
    
 }

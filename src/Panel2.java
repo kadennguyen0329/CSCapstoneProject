@@ -101,6 +101,7 @@ public class Panel2 extends JPanel implements KeyListener
       }
       
       
+      
       if(location == LOBBY && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
          if(!hasMovedHallMonitor)
@@ -272,34 +273,40 @@ public class Panel2 extends JPanel implements KeyListener
       if(enemies.get(0).getY() < y)
          enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
-  
-   
    
    
    public void movePlayer()
    {
-      if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed()))
-         mainPlayer.moveY(-mainPlayer.getSpeed());
-         
-      else if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
-         mainPlayer.moveY(mainPlayer.getSpeed()); 
+      if(mainPlayer != null)
+         if(!mainPlayer.isHiding())
+         {
+            if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed()))
+               mainPlayer.moveY(-mainPlayer.getSpeed());
+            
+            else if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
+               mainPlayer.moveY(mainPlayer.getSpeed()); 
              
-      if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
-         mainPlayer.moveX(-mainPlayer.getSpeed());
+            if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
+               mainPlayer.moveX(-mainPlayer.getSpeed());
+            
+            else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
+               mainPlayer.moveX(mainPlayer.getSpeed());
          
-      else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
-         mainPlayer.moveX(mainPlayer.getSpeed());
-      
-      
-      if(checkEnemyCollisions())
-         for(int i=0; i<enemies.size(); i++){
-            enemies.remove(i);
-            mainPlayer.setX(XSIZE/2);
-            mainPlayer.setY(YSIZE/2);
-            location = END;
-            Sound.randomNote();
+         
+            if(checkEnemyCollisions()){
+               for(int i=0; i<enemies.size(); i++){
+                  enemies.remove(i);
+                  mainPlayer.setX(XSIZE/2);
+                  mainPlayer.setY(YSIZE/2);
+                  location = END;
+                  Sound.randomNote();
+               }
+            }
+         
          }
    }
+   
+   
    
    public void paintComponent(Graphics g)
    {
@@ -400,7 +407,9 @@ public class Panel2 extends JPanel implements KeyListener
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
       seeObstacles(g);
+      if(!mainPlayer.isHiding())
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
+      
       for(Character enemy: enemies){
          g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
       }
@@ -603,6 +612,7 @@ public class Panel2 extends JPanel implements KeyListener
       if(c != null)
       {
          setWalls();
+         setTables();
          if(location == LOBBY)
          {
             if(c.getX() <= 0){
@@ -902,7 +912,6 @@ public class Panel2 extends JPanel implements KeyListener
                c.setY(0);
             }  
          }
-      
       }
    }
    
@@ -940,19 +949,33 @@ public class Panel2 extends JPanel implements KeyListener
    
    public void keyTyped(KeyEvent e) //methods called when key is typed
    {
-      
    }
       
    public void keyPressed(KeyEvent e) //methods called when key is pressed
    {
       if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
          System.exit(1);
+      if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+      {
+         for(Rectangle r: tables)
+         {
+            if(distance(mainPlayer.getX(), mainPlayer.getY(), (int)(r.getX() + (r.getWidth()/2)), (int)(r.getY() + (r.getHeight()/2))) < 200)
+            {
+               mainPlayer.setIsHiding(true);
+            }
+         }
+      }
+   
       pressedKeys.add(e.getKeyCode());
    }
    
    public void keyReleased(KeyEvent e)
    {
       pressedKeys.remove((Integer)(e.getKeyCode()));
+      if(e.getKeyCode() == KeyEvent.VK_SHIFT)
+      {
+         mainPlayer.setIsHiding(false);
+      }
    }
     
    private class Listener implements ActionListener

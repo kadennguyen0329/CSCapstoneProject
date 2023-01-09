@@ -1,5 +1,7 @@
 public class Character extends Entity
 {
+   public int previousX;
+   public int previousY;
    private int health;
    private int strength;
    private String name;
@@ -11,6 +13,26 @@ public class Character extends Entity
       health = health1;
       strength = strength1;
 
+   }
+   
+      public int getPreviousX()
+   {
+      return previousX;
+   }
+   
+   public int getPreviousY()
+   {
+      return previousY;
+   }
+   
+   public void setPreviousX(int x)
+   {
+      previousX = x;
+   }
+   
+   public void setPreviousY(int y)
+   {
+      previousY = y;
    }
    
    public int getHealth(){
