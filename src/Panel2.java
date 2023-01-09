@@ -53,7 +53,8 @@ public class Panel2 extends JPanel implements KeyListener
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
    
-   private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>();
+   private ArrayList<Rectangle> walls = new ArrayList<Rectangle>();
+   private ArrayList<Rectangle> tables = new ArrayList<Rectangle>();
    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
    public Panel2()
@@ -408,126 +409,145 @@ public class Panel2 extends JPanel implements KeyListener
    private void seeObstacles(Graphics g)
    {
       g.setColor(obstacleColor);
-      for(Rectangle r:obstacles)
+      for(Rectangle r:walls)
          g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+         
+      for(Rectangle r:tables)
+         g.fillRect((int)(r.getX()), (int)(r.getY()), (int)(r.getWidth()), (int)(r.getHeight()));
+   
    }
    
-   public void setWalls()
+   public void setTables()
    {
-      for(int i=0; i<obstacles.size(); i++)
-         obstacles.remove(i);
-      if(location == LOBBY)
+      for(int i=0; i<tables.size(); i++)
+         tables.remove(i);
+         
+      if(location == CAFEA)
       {
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(19.0/75)), (int)(XSIZE*(32.0/120)), YSIZE-((int)(YSIZE*(19.0/75)))));
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(32.0/120)), ((int)(YSIZE*(2.0/75)))));
-         obstacles.add(new Rectangle((int)(XSIZE*(102.0/120)), (int)(YSIZE*(17.0/75)), XSIZE-((int)(XSIZE*(101.0/120))), YSIZE-((int)(YSIZE*(17.0/75)))));
-         obstacles.add(new Rectangle((int)(XSIZE*(102.0/120)), 0, XSIZE-(int)(XSIZE*(102.0/120)), ((int)(YSIZE*(2.0/75)))));
-      }
-      else if(location == EHALL)
-      {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
-      }
-      else if(location == FHALL)
-      {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(33.0/120)), YSIZE));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0, XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(16.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(27.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(32.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(70.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
-      }
-      else if(location == CAFEA)
-      {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(31.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(61.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(8.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(59.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(93.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(61.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(27.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(8.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(59.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(14.0/120)), (int)(YSIZE*(7.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(93.0/120)), (int)(YSIZE*(57.0/75)), (int)(XSIZE*(13.0/120)), (int)(YSIZE*(7.0/75))));
       }
       else if(location == CAFEB)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(4.0/120)), (int)(YSIZE*(30.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(75.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(75.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+      }
+   }
+
+   
+   public void setWalls()
+   {
+      for(int i=0; i<walls.size(); i++)
+         walls.remove(i);
+      if(location == LOBBY)
+      {
+         walls.add(new Rectangle(0, (int)(YSIZE*(19.0/75)), (int)(XSIZE*(32.0/120)), YSIZE-((int)(YSIZE*(19.0/75)))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(32.0/120)), ((int)(YSIZE*(2.0/75)))));
+         walls.add(new Rectangle((int)(XSIZE*(102.0/120)), (int)(YSIZE*(17.0/75)), XSIZE-((int)(XSIZE*(101.0/120))), YSIZE-((int)(YSIZE*(17.0/75)))));
+         walls.add(new Rectangle((int)(XSIZE*(102.0/120)), 0, XSIZE-(int)(XSIZE*(102.0/120)), ((int)(YSIZE*(2.0/75)))));
+      }
+      
+      else if(location == EHALL)
+      {
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+      }
+      else if(location == FHALL)
+      {
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(33.0/120)), YSIZE));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0, XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(16.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(27.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), (int)(YSIZE*(32.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(70.0/75)), XSIZE-(int)(XSIZE*(97.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
+      }
+      else if(location == CAFEA)
+      {
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(31.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
+      }
+      else if(location == CAFEB)
+      {
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(4.0/120)), (int)(YSIZE*(30.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
       }
       else if(location == AHALL1)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
       }
       else if(location == AHALL2)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
       
       }
       else if(location == AHALL3 )
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE), (int)(YSIZE*(14.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(26.0/75)), (int)(XSIZE*(17.0/120)), (int)(YSIZE*(50.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(103.0/120)), (int)(YSIZE*(26.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(49.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE), (int)(YSIZE*(14.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(26.0/75)), (int)(XSIZE*(17.0/120)), (int)(YSIZE*(50.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(103.0/120)), (int)(YSIZE*(26.0/75)), (int)(XSIZE*(16.0/120)), (int)(YSIZE*(49.0/75))));
       }
       else if(location == BHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == CHALL1)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(36.0/120)), (int)(YSIZE)));
-         obstacles.add(new Rectangle((int)(XSIZE*(83.0/120)), (int)(YSIZE*(0.0/75)), (int)(XSIZE*(37.0/120)), (int)(YSIZE*(48.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(36.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(84.0/120)), (int)(YSIZE*(9.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(36.0/120)), (int)(YSIZE)));
+         walls.add(new Rectangle((int)(XSIZE*(83.0/120)), (int)(YSIZE*(0.0/75)), (int)(XSIZE*(37.0/120)), (int)(YSIZE*(48.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(36.0/120)), (int)(YSIZE*(66.0/75)), (int)(XSIZE*(84.0/120)), (int)(YSIZE*(9.0/75))));
       }
       else if(location == DHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == FHALL2)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(4.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(17.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(41.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(70.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(5.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(83.0/120)), 0, (int)(XSIZE*(837.0/120)), YSIZE));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(4.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(17.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(41.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(70.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(5.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(83.0/120)), 0, (int)(XSIZE*(837.0/120)), YSIZE));
       }
       else if(location == GHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == KHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == LHALL)
       {
-         obstacles.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
-         obstacles.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == CHALL2)
       {
-         obstacles.add(new Rectangle(0, 0, (int)(XSIZE*(49.0/120)), YSIZE));
-         obstacles.add(new Rectangle(0, 0,  XSIZE, (int)(YSIZE*(4.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(16.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(38.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(71.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(7.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(49.0/120)), YSIZE));
+         walls.add(new Rectangle(0, 0,  XSIZE, (int)(YSIZE*(4.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(16.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(38.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(71.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(7.0/75))));
       }
       //Nathan: aHall1, aHall2, bHall,cHall1, cHall2
       //Kaden: dHall, fHall2, gHall, kHall, lHall
       
       else if(location == END)
       {
-         obstacles.add(new Rectangle((int)(XSIZE*(6.0/120)), (int)(YSIZE*(61.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(10.0/75))));
-         obstacles.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(59.0/75)), (int)(XSIZE*(27.0/120)), (int)(YSIZE*(12.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(6.0/120)), (int)(YSIZE*(61.0/75)), (int)(XSIZE*(33.0/120)), (int)(YSIZE*(10.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(59.0/75)), (int)(XSIZE*(27.0/120)), (int)(YSIZE*(12.0/75))));
          
          if(checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed())){
             
@@ -904,10 +924,14 @@ public class Panel2 extends JPanel implements KeyListener
       }
       return false;
    }
-   
+
    
    public boolean checkObstacleCollisions(int x, int y){
-      for(Rectangle r: obstacles){
+      for(Rectangle r: walls){
+         if(r.contains(x, y))
+            return true;
+      }
+      for(Rectangle r: tables){
          if(r.contains(x, y))
             return true;
       }
