@@ -43,7 +43,7 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
-   public static final Color obstacleColor = new Color(255, 0, 0, 60);
+   public static final Color obstacleColor = new Color(255, 0, 0, 0);
    private static int hallMonitorStage;
    private static boolean hasMovedHallMonitor;
    
