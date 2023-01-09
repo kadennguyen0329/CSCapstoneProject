@@ -481,6 +481,7 @@ public class Panel2 extends JPanel implements KeyListener
          walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(73.0/75)), XSIZE, (int)(YSIZE*(10.0/75))));
       }
       else if(location == AHALL2)
       {
@@ -845,14 +846,14 @@ public class Panel2 extends JPanel implements KeyListener
                location = KHALL;
                resetHallMonitor();
                c.setX(0);
-               c.setY((int)(YSIZE*(60.0/120)));
+               c.setY((int)(YSIZE*(50.0/120)));
             }
             if(c.getX() > XSIZE && c.getY() > YSIZE/2)
             {
                location = BHALL;
                resetHallMonitor();
                c.setX(0);
-               c.setY((int)(YSIZE*(60.0/120)));
+               c.setY((int)(YSIZE*(50.0/120)));
             }
             if(c.getY() > YSIZE)
             {
@@ -886,6 +887,7 @@ public class Panel2 extends JPanel implements KeyListener
                location = AHALL3;
                resetHallMonitor();
                c.setX(0);
+               c.setY((int)(YSIZE*(24.0/120)));
             }
             if(c.getX() < 0)
             {
@@ -902,14 +904,14 @@ public class Panel2 extends JPanel implements KeyListener
                location = LHALL;
                resetHallMonitor();
                c.setX(0);
-               c.setY((int)(YSIZE*(17.0/75))); 
+               c.setY((int)(YSIZE*(32.0/75))); 
             }
             if(c.getX() < 0)
             {
                location = KHALL;
                resetHallMonitor();
                c.setX(XSIZE);
-               c.setY((int)(YSIZE*(17.0/75))); 
+               c.setY((int)(YSIZE*(32.0/75))); 
             }
             if(c.getY() > YSIZE)
             {
