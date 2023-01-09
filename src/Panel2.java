@@ -476,12 +476,12 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == CAFEA)
       {
-         walls.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(31.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(28.0/75))));
          walls.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
       }
       else if(location == CAFEB)
       {
-         walls.add(new Rectangle(0, 0, (int)(XSIZE*(4.0/120)), (int)(YSIZE*(30.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(5.0/120)), (int)(YSIZE*(28.0/75))));
          walls.add(new Rectangle(0, (int)(YSIZE*(47.0/75)), (int)(XSIZE*(5.0/120)), YSIZE-(int)(YSIZE*(47.0/75))));
       }
       else if(location == AHALL1)
