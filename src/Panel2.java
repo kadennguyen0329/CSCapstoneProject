@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-   
+
 public class Panel2 extends JPanel implements KeyListener
 {
    public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
