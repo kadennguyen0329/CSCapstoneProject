@@ -36,14 +36,15 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int GHALL = 14;
    public static final int KHALL = 15;
    public static final int LHALL = 16;
-   public static final int END = 17;
+   public static final int DHALLCLASS = 17;
+   public static final int END = 18;
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
    public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
-   public static final Color obstacleColor = new Color(255, 0, 0, 0);
+   public static final Color obstacleColor = new Color(255, 0, 0, 100);
    private static int hallMonitorStage;
    private static boolean hasMovedHallMonitor;
    
@@ -340,6 +341,12 @@ public class Panel2 extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
+      else if(location == DHALLCLASS)
+      {
+         enemies.get(0).setX(-100);
+         enemies.get(0).setY(-100);
+         hasMovedHallMonitor = true;
+      }
       else if(location == CAFEB || location == CAFEA)
       {
          enemies.get(0).setX(-100);
@@ -500,6 +507,11 @@ public class Panel2 extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/lHall.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      else if(location == DHALLCLASS)
+      {
+         ImageIcon pic = new ImageIcon("images/dHallClassroom.png");
+         g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
+      }
       else if(location == END)
       {
          ImageIcon pic = new ImageIcon("images/End.png");
@@ -618,7 +630,8 @@ public class Panel2 extends JPanel implements KeyListener
       }
       else if(location == DHALL)
       {
-         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(90.0/120)), (int)(YSIZE*(15.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(104.0/120)), 0, (int)(XSIZE*(80.0/120)), (int)(YSIZE*(15.0/75))));
          walls.add(new Rectangle(0, (int)(YSIZE*(54.0/75)), XSIZE, YSIZE-(int)(YSIZE*(54.0/75))));
       }
       else if(location == FHALL2)
@@ -649,6 +662,18 @@ public class Panel2 extends JPanel implements KeyListener
          walls.add(new Rectangle(0, 0,  XSIZE, (int)(YSIZE*(4.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(91.0/120)), (int)(YSIZE*(16.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(38.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(92.0/120)), (int)(YSIZE*(71.0/75)), (int)(XSIZE*(29.0/120)), (int)(YSIZE*(7.0/75))));
+      }
+      else if(location == DHALLCLASS)
+      {
+         walls.add(new Rectangle(0, 0, XSIZE, (int)(YSIZE*(4.0/75))));
+         walls.add(new Rectangle(0, 0, (int)(XSIZE*(14.0/120)), YSIZE));
+         walls.add(new Rectangle((int)(XSIZE*(111.0/120)), 0, (int)(XSIZE*(37.0/120)), YSIZE));
+         walls.add(new Rectangle(0, (int)(YSIZE*(71.0/75)), (int)(XSIZE*(46.0/120)), (int)(YSIZE*(5.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(80.0/120)), (int)(YSIZE*(71.0/75)), (int)(XSIZE*(40.0/120)), YSIZE-(int)(YSIZE*(70.0/75))));
+      
+      
+      
+         
       }
       //Nathan: aHall1, aHall2, bHall,cHall1, cHall2
       //Kaden: dHall, fHall2, gHall, kHall, lHall
@@ -922,6 +947,13 @@ public class Panel2 extends JPanel implements KeyListener
                c.setX(0);
                c.setY((int)(YSIZE*(32.0/75))); 
             }
+            if(c.getY() < 0)
+            {
+               location = DHALLCLASS;
+               resetHallMonitor();
+               c.setX((int)(XSIZE*(64.0/120)));
+               c.setY(YSIZE);
+            }
             if(c.getX() < 0)
             {
                location = CHALL1;
@@ -1028,6 +1060,16 @@ public class Panel2 extends JPanel implements KeyListener
                resetHallMonitor();
                c.setY(0);
             }  
+         }
+         if(location == DHALLCLASS)
+         {
+            if(c.getY() > YSIZE)
+            {
+               location = DHALL;
+               resetHallMonitor();
+               c.setY(0);
+               c.setX((int)(XSIZE*(95.0/120)));
+            }
          }
       }
    }
