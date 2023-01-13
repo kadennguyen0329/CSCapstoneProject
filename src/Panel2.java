@@ -1064,6 +1064,19 @@ public class Panel2 extends JPanel implements KeyListener
       return false;
    }
    
+   public boolean checkTableCollisions(Character player)
+   {
+      if(checkObstacleCollisions(player.getX(), player.getY()-player.getSpeed()) || checkObstacleCollisions(player.getX() + PLAYER_WIDTH, player.getY()-player.getSpeed()))
+         return true;
+      if(checkObstacleCollisions(player.getX(), player.getY()+player.getSpeed() + PLAYER_HEIGHT) || checkObstacleCollisions(player.getX() + PLAYER_WIDTH, player.getY()+player.getSpeed() + PLAYER_HEIGHT))
+         return true;
+      if(checkObstacleCollisions(player.getX()-player.getSpeed(), player.getY()) || checkObstacleCollisions(player.getX()-player.getSpeed(), player.getY() + PLAYER_HEIGHT))
+         return true;
+      if(checkObstacleCollisions(player.getX()+player.getSpeed() + PLAYER_WIDTH, player.getY()) || checkObstacleCollisions(player.getX()+player.getSpeed() + PLAYER_WIDTH, player.getY() + PLAYER_HEIGHT))
+         return true;
+      return false;
+   }
+   
    public void keyTyped(KeyEvent e) //methods called when key is typed
    {
    }
@@ -1076,10 +1089,11 @@ public class Panel2 extends JPanel implements KeyListener
       {
          for(Rectangle r: tables)
          {
-            if(distance((int)(mainPlayer.getX() + (mainPlayer.getWidth()/2)), (int)(mainPlayer.getY() + (mainPlayer.getHeight()/2)), (int)(r.getX() + (r.getWidth()/2)), (int)(r.getY() + (r.getHeight()/2))) < 200)
+            if(checkTableCollisions(mainPlayer))
             {
                mainPlayer.setIsHiding(true);
             }
+                
          }
       }
    
