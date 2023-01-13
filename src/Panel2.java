@@ -165,7 +165,7 @@ public class Panel2 extends JPanel implements KeyListener
       {
          if(!hasMovedHallMonitor)
          {
-            enemies.get(0).setX((int)(XSIZE*(8.0/120)));
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
             enemies.get(0).setY((int)(YSIZE*(32.0/75)));
             hasMovedHallMonitor = true;
          }
@@ -182,7 +182,7 @@ public class Panel2 extends JPanel implements KeyListener
                hallMonitorStage = 0;
          }
       }
-      if(location == FHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
+      else if(location == FHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
          if(!hasMovedHallMonitor)
          {
@@ -240,12 +240,113 @@ public class Panel2 extends JPanel implements KeyListener
                hallMonitorStage = 0;
          }
       }
-      if(location == CAFEB || location == CAFEA)
+      
+      else if(location == AHALL1)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == AHALL2)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == AHALL3)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == BHALL)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == CHALL1)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(55.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == CHALL2)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(70.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(40.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == DHALL)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == FHALL2)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(55.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == GHALL)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == KHALL)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == LHALL)
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == CAFEB || location == CAFEA)
       {
          enemies.get(0).setX(-100);
          enemies.get(0).setY(-100);
          hasMovedHallMonitor = true;
       }
+     
      
    }
 
