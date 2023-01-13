@@ -274,7 +274,6 @@ public class Panel2 extends JPanel implements KeyListener
          enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
    
-   
    public void movePlayer()
    {
       if(mainPlayer != null)
@@ -302,7 +301,6 @@ public class Panel2 extends JPanel implements KeyListener
                   Sound.randomNote();
                }
             }
-         
          }
    }
    
@@ -408,7 +406,7 @@ public class Panel2 extends JPanel implements KeyListener
       }
       seeObstacles(g);
       if(!mainPlayer.isHiding())
-      g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
+         g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
       
       for(Character enemy: enemies){
          g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
@@ -977,7 +975,7 @@ public class Panel2 extends JPanel implements KeyListener
       {
          for(Rectangle r: tables)
          {
-            if(distance(mainPlayer.getX(), mainPlayer.getY(), (int)(r.getX() + (r.getWidth()/2)), (int)(r.getY() + (r.getHeight()/2))) < 200)
+            if(distance((int)(mainPlayer.getX() + (mainPlayer.getWidth()/2)), (int)(mainPlayer.getY() + (mainPlayer.getHeight()/2)), (int)(r.getX() + (r.getWidth()/2)), (int)(r.getY() + (r.getHeight()/2))) < 200)
             {
                mainPlayer.setIsHiding(true);
             }
