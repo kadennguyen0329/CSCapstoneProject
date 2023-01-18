@@ -353,25 +353,25 @@ public class Panel2 extends JPanel implements KeyListener
    
    public void hallMonitorFollow()
    {
-      if(enemies.get(0).getX() < mainPlayer.getX())
+      if(enemies.get(0).getX() < mainPlayer.getX() && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY() + PLAYER_HEIGHT))
          enemies.get(0).moveX(enemies.get(0).getSpeed());
-      if(enemies.get(0).getX() > mainPlayer.getX())
+      if(enemies.get(0).getX() > mainPlayer.getX() && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY() + PLAYER_HEIGHT))
          enemies.get(0).moveX(-enemies.get(0).getSpeed());
-      if(enemies.get(0).getY() > mainPlayer.getY())
+      if(enemies.get(0).getY() > mainPlayer.getY() && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()-enemies.get(0).getSpeed()) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()-enemies.get(0).getSpeed()))
          enemies.get(0).moveY(-enemies.get(0).getSpeed());
-      if(enemies.get(0).getY() < mainPlayer.getY())
+      if(enemies.get(0).getY() < mainPlayer.getY() && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT))
          enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
    
    public void hallMonitorReturn(int x, int y)
    {
-      if(enemies.get(0).getX() < x)
+      if(enemies.get(0).getX() < x && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY() + PLAYER_HEIGHT))
          enemies.get(0).moveX(enemies.get(0).getSpeed());
-      if(enemies.get(0).getX() > x)
+      if(enemies.get(0).getX() > x && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY() + PLAYER_HEIGHT))
          enemies.get(0).moveX(-enemies.get(0).getSpeed());
-      if(enemies.get(0).getY() > y)
+      if(enemies.get(0).getY() > y && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()-enemies.get(0).getSpeed()) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()-enemies.get(0).getSpeed()))
          enemies.get(0).moveY(-enemies.get(0).getSpeed());
-      if(enemies.get(0).getY() < y)
+      if(enemies.get(0).getY() < y && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT))
          enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
    
@@ -389,7 +389,7 @@ public class Panel2 extends JPanel implements KeyListener
             if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
                mainPlayer.moveX(-mainPlayer.getSpeed());
             
-            else if(pressedKeys.contains(KeyEvent.VK_D)&& !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
+            else if(pressedKeys.contains(KeyEvent.VK_D) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
                mainPlayer.moveX(mainPlayer.getSpeed());
          
          
