@@ -44,7 +44,7 @@ public class Panel2 extends JPanel implements KeyListener
    public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
-   public static final Color obstacleColor = new Color(255, 0, 0, 100);
+   public static final Color obstacleColor = new Color(255, 0, 0, 0);
    private static int hallMonitorStage;
    private static boolean hasMovedHallMonitor;
    
@@ -341,11 +341,64 @@ public class Panel2 extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == DHALLCLASS)
+      if(location == DHALLCLASS && enemies.size() != 0 && !enemies.get(0).getIsFollowing())
       {
-         enemies.get(0).setX(-100);
-         enemies.get(0).setY(-100);
-         hasMovedHallMonitor = true;
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(37.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(5.0/75)));
+            hasMovedHallMonitor = true;
+         }
+         
+         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(82.0/120)))
+         {
+            enemies.get(0).moveX(enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
+               hallMonitorStage = 1;
+         }
+            
+         else if(hallMonitorStage == 1 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 2;
+         }
+         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
+               hallMonitorStage = 3;
+         }
+         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
+         {
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
+               hallMonitorStage = 4;
+         }
+         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
+               hallMonitorStage = 5;
+         }
+         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
+         {
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
+               hallMonitorStage = 6;
+         }
+         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
+         {
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
+               hallMonitorStage = 7;
+         }
+         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
+         {
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
+               hallMonitorStage = 0;
+         }
       }
       else if(location == CAFEB || location == CAFEA)
       {
@@ -557,6 +610,25 @@ public class Panel2 extends JPanel implements KeyListener
          tables.add(new Rectangle((int)(XSIZE*(75.0/120)), (int)(YSIZE*(10.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
          tables.add(new Rectangle((int)(XSIZE*(18.0/120)), (int)(YSIZE*(56.0/75)), (int)(XSIZE*(35.0/120)), (int)(YSIZE*(8.0/75))));
          tables.add(new Rectangle((int)(XSIZE*(78.0/120)), (int)(YSIZE*(55.0/75)), (int)(XSIZE*(32.0/120)), (int)(YSIZE*(8.0/75))));
+      }
+      else if(location == DHALLCLASS)
+      {
+         tables.add(new Rectangle((int)(XSIZE*(24.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(46.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(68.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(90.0/120)), (int)(YSIZE*(13.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         
+         tables.add(new Rectangle((int)(XSIZE*(24.0/120)), (int)(YSIZE*(30.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(46.0/120)), (int)(YSIZE*(30.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(68.0/120)), (int)(YSIZE*(30.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(90.0/120)), (int)(YSIZE*(30.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         
+         tables.add(new Rectangle((int)(XSIZE*(24.0/120)), (int)(YSIZE*(47.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(46.0/120)), (int)(YSIZE*(47.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(68.0/120)), (int)(YSIZE*(47.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         tables.add(new Rectangle((int)(XSIZE*(90.0/120)), (int)(YSIZE*(47.0/75)), (int)(XSIZE*(12.0/120)), (int)(YSIZE*(10.0/75))));
+         
+         
       }
    }
 
