@@ -42,9 +42,23 @@ public class Sound
    public static void randomNote()
    {
       channels[0].programChange(instr[ORGAN].getPatch().getProgram());
-      int pitch = (int)(Math.random() * 20) + 35;          
+      int pitch = 52;          
       int velocity = 100;
+      channels[0].noteOn(55, 1);
+      channels[0].noteOn(58, 100);
       channels[0].noteOn(pitch, velocity);
+   }
+   
+   public static void test()
+   {
+      channels[0].programChange(instr[ORGAN].getPatch().getProgram());
+      int pitch = 69;          
+      int velocity = 100;
+      channels[0].noteOn(45, 1);
+      channels[0].noteOn(61, 100);
+      channels[0].noteOn(44, 100);
+      channels[0].noteOn(pitch, velocity); //F Sharp diminished, d sharp minor 7 flat 5, minor 6, diminished chords,
+      //E diminished: 52 55, 58
    }
    
 }

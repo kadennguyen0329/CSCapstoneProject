@@ -350,10 +350,10 @@ public class Panel2 extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
          
-         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(82.0/120)))
+         else if(hallMonitorStage == 0 & enemies.get(0).getX() < (int)(XSIZE*(84.0/120)))
          {
             enemies.get(0).moveX(enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() >= (int)(XSIZE*(90.0/120))))
+            if((enemies.get(0).getX() >= (int)(XSIZE*(84.0/120))))
                hallMonitorStage = 1;
          }
             
@@ -363,40 +363,16 @@ public class Panel2 extends JPanel implements KeyListener
             if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
                hallMonitorStage = 2;
          }
-         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(80.0/120)))
+         else if(hallMonitorStage == 2 & enemies.get(0).getX() > (int)(XSIZE*(40.0/120)))
          {
             enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(80.0/120))))
+            if((enemies.get(0).getX() <= (int)(XSIZE*(40.0/120))))
                hallMonitorStage = 3;
          }
-         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
+         else if(hallMonitorStage == 3 & enemies.get(0).getY() > (int)(YSIZE*(5.0/75)))
          {
             enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
-               hallMonitorStage = 4;
-         }
-         else if(hallMonitorStage == 4 & enemies.get(0).getX() > (int)(XSIZE*(55.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(55.0/120))))
-               hallMonitorStage = 5;
-         }
-         else if(hallMonitorStage == 5 & enemies.get(0).getY() < (int)(YSIZE*(60.0/75)))
-         {
-            enemies.get(0).moveY(enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() >= (int)(YSIZE*(60.0/75))))
-               hallMonitorStage = 6;
-         }
-         else if(hallMonitorStage == 6 & enemies.get(0).getX() > (int)(XSIZE*(37.0/120)))
-         {
-            enemies.get(0).moveX(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getX() <= (int)(XSIZE*(37.0/120))))
-               hallMonitorStage = 7;
-         }
-         else if(hallMonitorStage == 7 & enemies.get(0).getY() > (int)(YSIZE*(15.0/75)))
-         {
-            enemies.get(0).moveY(-enemies.get(0).getSpeed());
-            if((enemies.get(0).getY() <= (int)(YSIZE*(15.0/75))))
+            if((enemies.get(0).getY() <= (int)(YSIZE*(5.0/75))))
                hallMonitorStage = 0;
          }
       }
@@ -406,8 +382,6 @@ public class Panel2 extends JPanel implements KeyListener
          enemies.get(0).setY(-100);
          hasMovedHallMonitor = true;
       }
-     
-     
    }
 
    
