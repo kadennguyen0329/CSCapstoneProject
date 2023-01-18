@@ -59,6 +59,7 @@ public class Sound
       channels[0].noteOn(44, 100);
       channels[0].noteOn(pitch, velocity); //F Sharp diminished, d sharp minor 7 flat 5, minor 6, diminished chords,
       //E diminished: 52 55, 58
+      //Woodblock for atmosphere
    }
    
 }
