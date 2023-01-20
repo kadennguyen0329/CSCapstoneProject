@@ -41,7 +41,7 @@ public class Panel extends JPanel implements KeyListener
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
-   public static final Color obstacleColor = new Color(10, 10, 10, 200);
+   public static final Color obstacleColor = new Color(255, 0, 0, 200);
    private static int hallMonitorStage;
    private static boolean hasMovedHallMonitor;
    
@@ -284,7 +284,7 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/End.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
-      //seeObstacles(g);
+      seeObstacles(g);
       g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
       for(Character enemy: enemies){
          g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
@@ -358,10 +358,9 @@ public class Panel extends JPanel implements KeyListener
       }
       else if(location == AHALL1)
       {
-         walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
-         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
+          walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  XSIZE, (int)(YSIZE*(26.0/75))));
+         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));   
       }
       else if(location == AHALL2)
       {
