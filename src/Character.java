@@ -4,18 +4,20 @@ public class Character extends Entity
    public int previousY;
    private int health;
    private int strength;
+   private int location;
    private String name;
    
-   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, int health1, int speed1, int strength1, String name1)
+   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, int health1, int speed1, int strength1, String name1, int location1)
    {
       super(xCoord, yCoord, w, h, speed1, imageFileName);
       name = name1;
       health = health1;
       strength = strength1;
-
+      location = location1;
+   
    }
    
-      public int getPreviousX()
+   public int getPreviousX()
    {
       return previousX;
    }
@@ -47,4 +49,14 @@ public class Character extends Entity
       return name;
    }
    
-  }
+   public int getLocation()
+   {
+      return location;
+   }
+   
+   public void setLocation(int l)
+   {
+      location = l;
+   }
+   
+}
