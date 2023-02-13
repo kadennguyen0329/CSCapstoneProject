@@ -17,6 +17,11 @@ public class Character extends Entity
    
    }
    
+   public void damage(int num)
+   {
+      health += -num;
+   }
+   
    public int getPreviousX()
    {
       return previousX;

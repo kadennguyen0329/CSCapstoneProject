@@ -69,7 +69,7 @@ public class Panel extends JPanel implements KeyListener
       hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden", 1);
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1));
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1, 1));
    }
    
    public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
@@ -419,6 +419,27 @@ public class Panel extends JPanel implements KeyListener
          enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
    
+   public void healthCheck()
+   {
+   
+      if(checkEnemyCollisions()){
+         for(int i=0; i<enemies.size(); i++){
+            mainPlayer.damage(enemies.get(i).getDPS());
+         }
+         if(mainPlayer.getHealth() <= 0)
+         { 
+            for(int i=0; i<enemies.size(); i++)
+            {
+               enemies.remove(i);
+               mainPlayer.setX(XSIZE/2);
+               mainPlayer.setY(YSIZE/2);
+               location = END;
+               Sound.randomNote();
+            }
+         }
+      }
+   }
+   
    public void movePlayer()
    {
       if(mainPlayer != null)
@@ -435,17 +456,6 @@ public class Panel extends JPanel implements KeyListener
             
             else if(pressedKeys.contains(KeyEvent.VK_D) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
                mainPlayer.moveX(mainPlayer.getSpeed());
-         
-         
-            if(checkEnemyCollisions()){
-               for(int i=0; i<enemies.size(); i++){
-                  enemies.remove(i);
-                  mainPlayer.setX(XSIZE/2);
-                  mainPlayer.setY(YSIZE/2);
-                  location = END;
-                  Sound.randomNote();
-               }
-            }
          }
    }
    
@@ -554,6 +564,10 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/End.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
+      
+          g.setFont(new Font("Serif", Font.PLAIN, 25));
+      g.drawString(""+mainPlayer.getHealth(), mainPlayer.getX(), mainPlayer.getY());
+      
       seeObstacles(g);
       if(!mainPlayer.isHiding())
          g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
@@ -743,7 +757,7 @@ public class Panel extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1, 1));
                Sound.silence();
             }
             else
@@ -754,7 +768,7 @@ public class Panel extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1, 1));
                Sound.silence();
             }
             else
@@ -765,7 +779,7 @@ public class Panel extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor",1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor",1,1));
                Sound.silence();
             }
             else
@@ -776,7 +790,7 @@ public class Panel extends JPanel implements KeyListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, "images/Player.png", 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, "images/Enemy.png", 100, enemySpeed, 1, "Hall Monitor", 1, 1));
                Sound.silence();
             }
             else
@@ -1298,9 +1312,13 @@ public class Panel extends JPanel implements KeyListener
    {
       public void actionPerformed(ActionEvent e) //methods called every frame
       {
-         movePlayer();
-         setBoundaries(mainPlayer);
-         hallMonitorMovement(); 
+         if(frames >= 5)
+         {
+            movePlayer();
+            setBoundaries(mainPlayer);
+            hallMonitorMovement(); 
+            healthCheck();
+         }
          repaint();
          frames++;
          
