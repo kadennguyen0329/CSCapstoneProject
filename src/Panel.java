@@ -644,10 +644,8 @@ public class Panel extends JPanel implements KeyListener
       else if(location == AHALL1)
       {
          walls.add(new Rectangle(0, 0, (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
-         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)),  (int)(XSIZE*(23.0/120)), (int)(YSIZE*(26.0/75))));
          walls.add(new Rectangle((int)(XSIZE*(97.0/120)), 0,  (int)(XSIZE*(24.0/120)), (int)(YSIZE*(26.0/75))));
-         walls.add(new Rectangle((int)(XSIZE*(97.0/120)), (int)(YSIZE*(49.0/75)), (int)(XSIZE*(24.0/120)), (int)(YSIZE*(27.0/75))));
-         walls.add(new Rectangle(0, (int)(YSIZE*(73.0/75)), XSIZE, (int)(YSIZE*(10.0/75))));
+         walls.add(new Rectangle(0, (int)(YSIZE*(49.0/75)), XSIZE, (int)(YSIZE*(10.0/75))));
       }
       else if(location == AHALL2)
       {
