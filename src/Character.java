@@ -6,15 +6,23 @@ public class Character extends Entity
    private int strength;
    private int location;
    private String name;
+   private int walkingFrame = 0;
    
-   public Character(int xCoord, int yCoord, int w, int h, String imageFileName, int health1, int speed1, int strength1, String name1, int location1)
+   public Character(int xCoord, int yCoord, int w, int h, String[][] imageFileName, int health1, int speed1, int strength1, String name1, int location1)
    {
       super(xCoord, yCoord, w, h, speed1, imageFileName);
       name = name1;
       health = health1;
       strength = strength1;
       location = location1;
+   }
    
+   public void advanceWalk()
+   {
+      walkingFrame += 1;
+      if(walkingFrame > imageFileNames[0].length-1)
+         walkingFrame = 0;
+      super.setFrame(1, walkingFrame);
    }
    
    public void damage(int num)

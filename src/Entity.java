@@ -7,15 +7,27 @@ public class Entity
    private int height;
    private int width;
    private int speed;
+   protected String[][] imageFileNames;
    
-   public Entity(int xCoord, int yCoord, int w, int h, int speed1, String imageFileName)
+   public Entity(int xCoord, int yCoord, int w, int h, int speed1, String[][] imageFileName)
    {
       x = xCoord;
       y = yCoord;
       height = h;
       width = w;
       speed = speed1;
-      frame = new ImageIcon(imageFileName);
+      imageFileNames = imageFileName;
+      frame = new ImageIcon(imageFileNames[0][0]);
+   }
+   
+   public void setIdle()
+   {
+      frame = new ImageIcon(imageFileNames[0][0]);
+   }
+   
+   public void setFrame(int x, int y)
+   {
+      frame = new ImageIcon(imageFileNames[x][y]);
    }
    
    public ImageIcon getFrame()
