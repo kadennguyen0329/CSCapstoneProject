@@ -449,14 +449,14 @@ public class Panel extends JPanel implements KeyListener
             if(pressedKeys.contains(KeyEvent.VK_W) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()-mainPlayer.getSpeed()) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()-mainPlayer.getSpeed()))
             {
                mainPlayer.moveY(-mainPlayer.getSpeed());
-               if(frames % defaultSpeed == 0)
+               if(frames % (defaultSpeed*3) == 0)
                   mainPlayer.advanceWalk();
             }
             
             if(pressedKeys.contains(KeyEvent.VK_S) && !checkObstacleCollisions(mainPlayer.getX(), mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(mainPlayer.getX() + PLAYER_WIDTH, mainPlayer.getY()+mainPlayer.getSpeed() + PLAYER_HEIGHT))
             {
                mainPlayer.moveY(mainPlayer.getSpeed()); 
-               if(frames % defaultSpeed == 0)
+               if(frames % (defaultSpeed*3) == 0)
                   mainPlayer.advanceWalk();
             }
             
@@ -464,14 +464,14 @@ public class Panel extends JPanel implements KeyListener
             if(pressedKeys.contains(KeyEvent.VK_A) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()-mainPlayer.getSpeed(), mainPlayer.getY() + PLAYER_HEIGHT))
             {
                mainPlayer.moveX(-mainPlayer.getSpeed());
-               if(frames % defaultSpeed == 0)
+               if(frames % (defaultSpeed*3) == 0)
                   mainPlayer.advanceWalk();
             }
             
             if(pressedKeys.contains(KeyEvent.VK_D) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY()) && !checkObstacleCollisions(mainPlayer.getX()+mainPlayer.getSpeed() + PLAYER_WIDTH, mainPlayer.getY() + PLAYER_HEIGHT))
             {
                mainPlayer.moveX(mainPlayer.getSpeed());
-               if(frames % defaultSpeed == 0)
+               if(frames % (defaultSpeed*3) == 0)
                   mainPlayer.advanceWalk();
             }
             if(!pressedKeys.contains(KeyEvent.VK_W) && !pressedKeys.contains(KeyEvent.VK_A) && !pressedKeys.contains(KeyEvent.VK_S) && !pressedKeys.contains(KeyEvent.VK_D))
@@ -585,9 +585,11 @@ public class Panel extends JPanel implements KeyListener
          ImageIcon pic = new ImageIcon("images/End.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
-      
-      g.setFont(new Font("Serif", Font.PLAIN, 25));
-      g.drawString(""+mainPlayer.getHealth(), mainPlayer.getX(), mainPlayer.getY());
+      g.setColor(Color.RED);
+      g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5),mainPlayer.getWidth(), (mainPlayer.getHeight()/8));
+      g.setColor(Color.GREEN);
+   
+      g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5) , (int)(mainPlayer.getWidth()*(mainPlayer.getHealth()/100.0)), (mainPlayer.getHeight()/8)); 
       
       seeObstacles(g);
       if(!mainPlayer.isHiding())
