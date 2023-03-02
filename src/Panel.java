@@ -436,7 +436,7 @@ public class Panel extends JPanel implements KeyListener
    
    public void hallMonitorFollow()
    {
-      if(enemies != null)
+      if(enemies.size() != 0)
       {
          if(enemies.get(0).getX() < mainPlayer.getX() && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY() + PLAYER_HEIGHT))
             enemies.get(0).moveX(enemies.get(0).getSpeed());
