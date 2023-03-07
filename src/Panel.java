@@ -44,7 +44,7 @@ public class Panel extends JPanel implements KeyListener
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = defaultSpeed/2;
+   public static final int enemySpeed = defaultSpeed/8;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(255, 0, 0, 0);
@@ -55,6 +55,7 @@ public class Panel extends JPanel implements KeyListener
    public static double timeDistance;
    public static int followTime;
    public static boolean changingLoc;
+   public static int playerTwiceChange;
    public static int frames;
    
    private static Timer t;
@@ -88,29 +89,33 @@ public class Panel extends JPanel implements KeyListener
          {
             timeDistance = distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/10;
             changingLoc = true;
+            playerTwiceChange = location;
+         }
+         else if(playerTwiceChange != location)
+         {
+            timeDistance = distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/100;
+            followTime = 0;
+            playerTwiceChange = location;
          }
          followTime++;
          if(followTime == 2)
          {
+            playerTwiceChange = location;
             enemies.get(0).setPreviousX(mainPlayer.getX());
             enemies.get(0).setPreviousY(mainPlayer.getY());
          }
          
          if(followTime >= timeDistance && changingLoc)
          {
-            
-            enemies.get(0).setLocation(location);
-            enemies.get(0).setPrevHall(location);
             enemies.get(0).setX(enemies.get(0).getPreviousX());
             enemies.get(0).setY(enemies.get(0).getPreviousY());
+            enemies.get(0).setLocation(location);
+            enemies.get(0).setPrevHall(location);
             followTime = 0;
             enemies.get(0).setIsFollowing(true);
            
          }
-         
-         
-      
-         
+                 
       }
       
       
@@ -122,8 +127,11 @@ public class Panel extends JPanel implements KeyListener
          if(enemies.size() != 0 && !enemies.get(0).getIsFollowing())
          {
             enemies.get(0).setIsFollowing(true);
-            enemies.get(0).setPreviousX(enemies.get(0).getX());
-            enemies.get(0).setPreviousY(enemies.get(0).getY());
+            if(!changingLoc)
+            {
+               enemies.get(0).setPreviousX(enemies.get(0).getX());
+               enemies.get(0).setPreviousY(enemies.get(0).getY());
+            }
          }
       }
       
@@ -646,7 +654,7 @@ public class Panel extends JPanel implements KeyListener
             g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
             g.setColor(Color.BLACK);
             g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-            g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY(), 0,YSIZE-100);
+            g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY() + "   enemyPrevX: " + enemies.get(0).getPreviousX() + "    enemyPrevY: " + enemies.get(0).getPreviousY(), 0,YSIZE-100);
          }
       }
    }      
