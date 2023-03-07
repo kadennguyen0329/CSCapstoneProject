@@ -427,7 +427,7 @@ public class Panel extends JPanel implements KeyListener
             
          }
       }
-      if(changingLoc)
+      if(enemies.size() != 0 && changingLoc)
       {
          enemies.get(0).setIsFollowing(true);
       }   
