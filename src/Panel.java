@@ -118,7 +118,7 @@ public class Panel extends JPanel implements KeyListener
       {
          hallMonitorFollow();
          
-         if(!enemies.get(0).getIsFollowing())
+         if(enemies.size() != 0 && !enemies.get(0).getIsFollowing())
          {
             enemies.get(0).setIsFollowing(true);
             enemies.get(0).setPreviousX(enemies.get(0).getX());
