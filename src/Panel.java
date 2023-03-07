@@ -644,6 +644,9 @@ public class Panel extends JPanel implements KeyListener
             g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5),enemy.getWidth(), (enemy.getHeight()/8));
             g.setColor(Color.GREEN);
             g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
+            g.setColor(Color.BLACK);
+            g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+            g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY(), 0,YSIZE-100);
          }
       }
    }      
