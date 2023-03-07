@@ -98,10 +98,11 @@ public class Panel extends JPanel implements KeyListener
          
          if(followTime >= timeDistance && changingLoc)
          {
-            enemies.get(0).setX(enemies.get(0).getPreviousX());
-            enemies.get(0).setY(enemies.get(0).getPreviousY());
+            
             enemies.get(0).setLocation(location);
             enemies.get(0).setPrevHall(location);
+            enemies.get(0).setX(enemies.get(0).getPreviousX());
+            enemies.get(0).setY(enemies.get(0).getPreviousY());
             followTime = 0;
             enemies.get(0).setIsFollowing(true);
            
@@ -427,7 +428,7 @@ public class Panel extends JPanel implements KeyListener
             
          }
       }
-      if(changingLoc)
+      if(enemies.size() != 0 && changingLoc)
       {
          enemies.get(0).setIsFollowing(true);
       }   
