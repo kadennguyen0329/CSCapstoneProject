@@ -630,7 +630,6 @@ public class Panel extends JPanel implements KeyListener
       g.setColor(Color.RED);
       g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5),mainPlayer.getWidth(), (mainPlayer.getHeight()/8));
       g.setColor(Color.GREEN);
-   
       g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5) , (int)(mainPlayer.getWidth()*(mainPlayer.getHealth()/100.0)), (mainPlayer.getHeight()/8)); 
       
       seeObstacles(g);
@@ -638,7 +637,13 @@ public class Panel extends JPanel implements KeyListener
          g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
       
       for(Character enemy: enemies){
-         g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
+         {
+            g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
+            g.setColor(Color.RED);
+            g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5),enemy.getWidth(), (enemy.getHeight()/8));
+            g.setColor(Color.GREEN);
+            g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
+         }
       }
    }      
    
