@@ -44,7 +44,7 @@ public class Panel extends JPanel implements KeyListener
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = defaultSpeed/8;
+   public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
    public static final Color obstacleColor = new Color(255, 0, 0, 0);
@@ -55,6 +55,8 @@ public class Panel extends JPanel implements KeyListener
    public static double timeDistance;
    public static int followTime;
    public static boolean changingLoc;
+   public static int exitX;
+   public static int exitY;
    public static int playerTwiceChange;
    public static int frames;
    
@@ -103,6 +105,9 @@ public class Panel extends JPanel implements KeyListener
             playerTwiceChange = location;
             enemies.get(0).setPreviousX(mainPlayer.getX());
             enemies.get(0).setPreviousY(mainPlayer.getY());
+            exitX = mainPlayer.getX();
+            exitY = mainPlayer.getY();
+            
          }
          
          if(followTime >= timeDistance && changingLoc)
@@ -112,8 +117,10 @@ public class Panel extends JPanel implements KeyListener
             enemies.get(0).setLocation(location);
             enemies.get(0).setPrevHall(location);
             followTime = 0;
-            enemies.get(0).setIsFollowing(true);
-           
+            if(!mainPlayer.isHiding())
+            {
+               enemies.get(0).setIsFollowing(true);
+            }
          }
                  
       }
@@ -122,11 +129,22 @@ public class Panel extends JPanel implements KeyListener
          
       if((enemies.size() != 0 && distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getX(), mainPlayer.getY()) < 800 && !mainPlayer.isHiding()) || changingLoc)
       {
-         hallMonitorFollow();
+         if(!mainPlayer.isHiding())
+         {
+            hallMonitorFollow();
+         }
+         
          
          if(enemies.size() != 0 && !enemies.get(0).getIsFollowing())
          {
-            enemies.get(0).setIsFollowing(true);
+            if(!mainPlayer.isHiding())
+            {
+               enemies.get(0).setIsFollowing(true);
+            }
+            else
+            {
+               enemies.get(0).setIsFollowing(false);
+            }
             if(!changingLoc)
             {
                enemies.get(0).setPreviousX(enemies.get(0).getX());
@@ -286,7 +304,7 @@ public class Panel extends JPanel implements KeyListener
          }
       }
       
-      else if(location == AHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == AHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -295,7 +313,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == AHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == AHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -304,7 +322,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == AHALL3 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == AHALL3 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -313,7 +331,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == BHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == BHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -322,7 +340,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == CHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == CHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -331,7 +349,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == CHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == CHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -340,7 +358,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == DHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == DHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -349,7 +367,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == FHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == FHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -358,7 +376,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == GHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == GHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -367,7 +385,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == KHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == KHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -376,7 +394,7 @@ public class Panel extends JPanel implements KeyListener
             hasMovedHallMonitor = true;
          }
       }
-      else if(location == LHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && location == LHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
       {
          if(!hasMovedHallMonitor)
          {
@@ -420,7 +438,7 @@ public class Panel extends JPanel implements KeyListener
                hallMonitorStage = 0;
          }
       }
-      else if(location == CAFEB || location == CAFEA)
+      else if(enemies.size() != 0 && (location == CAFEB || location == CAFEA) )
       {
          enemies.get(0).setX(-100);
          enemies.get(0).setY(-100);
@@ -436,9 +454,14 @@ public class Panel extends JPanel implements KeyListener
             
          }
       }
-      if(enemies.size() != 0 && changingLoc)
+      if(enemies.size() != 0 && mainPlayer.isHiding())
       {
-         enemies.get(0).setIsFollowing(true);
+         enemies.get(0).setIsFollowing(false);
+         hallMonitorReturn(exitX, exitY);
+         if(enemies.get(0).getX() == exitX && enemies.get(0).getY() == exitY)
+         {
+            enemies.remove(0);
+         }
       }   
    }
 
@@ -891,10 +914,9 @@ public class Panel extends JPanel implements KeyListener
          if(location == LOBBY)
          {
             if(c.getX() <= 0){
-               enemies.get(0).setIsFollowing(false);
                location = EHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(EHALL);
                resetHallMonitor();
                c.setX(XSIZE - c.getWidth()*2);
@@ -902,10 +924,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getY() <= 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = FHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL);
                resetHallMonitor();
                c.setX(XSIZE/2);
@@ -919,10 +940,9 @@ public class Panel extends JPanel implements KeyListener
          if(location == EHALL)
          {
             if(c.getX() >= XSIZE-c.getWidth()){
-               enemies.get(0).setIsFollowing(false);
                location = LOBBY;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(LOBBY);
                resetHallMonitor();
                c.setX(c.getWidth());
@@ -933,10 +953,9 @@ public class Panel extends JPanel implements KeyListener
                
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL1;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL1);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -946,39 +965,35 @@ public class Panel extends JPanel implements KeyListener
          if(location == FHALL)
          {
             if(c.getY() > YSIZE-PLAYER_HEIGHT){
-               enemies.get(0).setIsFollowing(false);
                location = LOBBY;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(LOBBY);
                resetHallMonitor();
                c.setY(0);
             }
             if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() > YSIZE/2){
-               enemies.get(0).setIsFollowing(false);
                location = CAFEA;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CAFEA);
                resetHallMonitor();
                c.setY(YSIZE/2);
                c.setX(0);
             }
             if(c.getX() > XSIZE+PLAYER_WIDTH && c.getY() < YSIZE/2){
-               enemies.get(0).setIsFollowing(false);
                location = CAFEB;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CAFEB);
                resetHallMonitor();
                c.setY(YSIZE/2);
                c.setX(0);
             }
             if(c.getY() < 0){
-               enemies.get(0).setIsFollowing(false);
                location = FHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL2);
                resetHallMonitor();
                c.setY((int)(YSIZE)-PLAYER_HEIGHT);
@@ -988,10 +1003,9 @@ public class Panel extends JPanel implements KeyListener
          if(location == CAFEA)
          {
             if(c.getX() < 0){
-               enemies.get(0).setIsFollowing(false);
                location = FHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL);
                resetHallMonitor();
                c.setY((int)(YSIZE*(64.0/75)));
@@ -1007,10 +1021,9 @@ public class Panel extends JPanel implements KeyListener
          if(location == CAFEB)
          {
             if(c.getX() < 0){
-               enemies.get(0).setIsFollowing(false);
                location = FHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL);
                resetHallMonitor();
                c.setY((int)(YSIZE*(20.0/75)));
@@ -1026,20 +1039,18 @@ public class Panel extends JPanel implements KeyListener
          if(location == FHALL2)
          {
             if(c.getY() > YSIZE-PLAYER_HEIGHT){
-               enemies.get(0).setIsFollowing(false);
                location = FHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL);
                resetHallMonitor();
                c.setY(0);
             }
             if(c.getX() < 0 && c.getY() < YSIZE/2)
             {
-               enemies.get(0).setIsFollowing(false);
                location = LHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(LHALL);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1047,10 +1058,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0 && c.getY() > YSIZE/2)
             {
-               enemies.get(0).setIsFollowing(false);
                location = GHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(GHALL);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1061,10 +1071,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = FHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL2);
                resetHallMonitor();
                c.setX(0);
@@ -1072,10 +1081,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL3;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL3);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1086,10 +1094,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = FHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(FHALL2);
                resetHallMonitor();
                c.setX(0);
@@ -1097,10 +1104,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL2);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1111,40 +1117,36 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = GHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(GHALL);
                resetHallMonitor();
                c.setX(0);
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = BHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(BHALL);
                resetHallMonitor();
                c.setX(XSIZE);
             }
             if(c.getY() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL3;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL3);
                resetHallMonitor();
                c.setY(YSIZE);
             }
             if(c.getY() > YSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL1;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL1);
                resetHallMonitor();
                c.setY(0);
@@ -1154,30 +1156,27 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = EHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(EHALL);
                resetHallMonitor();
                c.setX(0);
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = DHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(DHALL);
                resetHallMonitor();
                c.setX(XSIZE);
             }
             if(c.getY() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL2);
                resetHallMonitor();
                c.setY(YSIZE);
@@ -1188,10 +1187,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL1;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL1);
                resetHallMonitor();
                c.setX(0);
@@ -1199,10 +1197,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getY() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = DHALLCLASS;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(DHALLCLASS);
                resetHallMonitor();
                c.setX((int)(XSIZE*(64.0/120)));
@@ -1210,10 +1207,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = CHALL1;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CHALL1);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1224,10 +1220,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = DHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(DHALL);
                resetHallMonitor();
                c.setX(0);
@@ -1235,10 +1230,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getY() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = CHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CHALL2);
                resetHallMonitor();
                c.setY(YSIZE);
@@ -1250,10 +1244,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE && c.getY() < YSIZE/2)
             {
-               enemies.get(0).setIsFollowing(false);
                location = KHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(KHALL);
                resetHallMonitor();
                c.setX(0);
@@ -1261,10 +1254,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() > XSIZE && c.getY() > YSIZE/2)
             {
-               enemies.get(0).setIsFollowing(false);
                location = BHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(BHALL);
                resetHallMonitor();
                c.setX(0);
@@ -1272,10 +1264,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getY() > YSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = CHALL1;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CHALL1);
                resetHallMonitor();
                c.setY(0);
@@ -1286,10 +1277,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL2);
                resetHallMonitor();
                c.setX(0);
@@ -1297,10 +1287,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = CHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CHALL2);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1311,10 +1300,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL3;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL3);
                resetHallMonitor();
                c.setX(0);
@@ -1322,10 +1310,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = CHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(CHALL2);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1336,10 +1323,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getX() > XSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = LHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(LHALL);
                resetHallMonitor();
                c.setX(0);
@@ -1347,10 +1333,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getX() < 0)
             {
-               enemies.get(0).setIsFollowing(false);
                location = KHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(KHALL);
                resetHallMonitor();
                c.setX(XSIZE);
@@ -1358,10 +1343,9 @@ public class Panel extends JPanel implements KeyListener
             }
             if(c.getY() > YSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = AHALL2;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(AHALL2);
                resetHallMonitor();
                c.setY(0);
@@ -1371,10 +1355,9 @@ public class Panel extends JPanel implements KeyListener
          {
             if(c.getY() > YSIZE)
             {
-               enemies.get(0).setIsFollowing(false);
                location = DHALL;
-               c.setPreviousX(c.getX());
-               c.setPreviousY(c.getY());
+               exitX  = (c.getX());
+               exitY = (c.getY());
                c.setLocation(DHALL);
                resetHallMonitor();
                c.setY(0);
