@@ -41,6 +41,8 @@ public class Panel extends JPanel implements KeyListener
    
    public static final String[][] mainPlayerImages = {{"images/Player.png", null},{"images/PlayerWalk1.png","images/PlayerWalk2.png"}};
    public static final String[][] enemyImages = {{"images/Enemy.png", null},{null,null}};
+   public static final String[][] itemImages = {{"images/Bat.png", null},{null,null}};
+
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
@@ -65,7 +67,9 @@ public class Panel extends JPanel implements KeyListener
    
    private ArrayList<Rectangle> walls = new ArrayList<Rectangle>();
    private ArrayList<Rectangle> tables = new ArrayList<Rectangle>();
-   private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+   private ArrayList<Enemy> enemies = new ArrayList<Enemy>();   
+   private ArrayList<Item> items = new ArrayList<Item>();
+   private ArrayList<Item> inventory = new ArrayList<Item>();
     
    public Panel()
    {
@@ -79,8 +83,26 @@ public class Panel extends JPanel implements KeyListener
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
       enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 25));
    }
    
+   public void handeItems()
+   {
+      for(int i = items.size()-1; i >= 0; i--)
+      {
+         if(distance(mainPlayer.getX(), mainPlayer.getY(), items.get(i).getX(), items.get(i).getY()) < 60)
+         {
+            inventory.add(items.remove(i));
+         }
+      }
+      
+      for(Item item: inventory)
+      {
+         item.setX(mainPlayer.getX());
+         item.setY(mainPlayer.getY());
+      }
+   }
+
    public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
    
    public void hallMonitorMovement()
@@ -495,7 +517,11 @@ public class Panel extends JPanel implements KeyListener
    
    public void healthCheck()
    {
-   
+      for(int i=0; i<enemies.size(); i++)
+      {
+         if(enemies.get(i).getHealth() <= 0)
+            enemies.remove(i);
+      }
       if(checkEnemyCollisions()){
          for(int i=0; i<enemies.size(); i++){
             mainPlayer.damage(enemies.get(i).getDPS());
@@ -512,8 +538,7 @@ public class Panel extends JPanel implements KeyListener
             }
          }
       }
-   }
-   
+   }      
    public void movePlayer()
    {
       if(mainPlayer != null)
@@ -668,17 +693,27 @@ public class Panel extends JPanel implements KeyListener
       if(!mainPlayer.isHiding())
          g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
       
-      for(Character enemy: enemies){
-         {
-            g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
-            g.setColor(Color.RED);
-            g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5),enemy.getWidth(), (enemy.getHeight()/8));
-            g.setColor(Color.GREEN);
-            g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
-            g.setColor(Color.BLACK);
-            g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-            g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY() + "   enemyPrevX: " + enemies.get(0).getPreviousX() + "    enemyPrevY: " + enemies.get(0).getPreviousY(), 0,YSIZE-100);
-         }
+      for(Character enemy: enemies)
+      {
+         g.drawImage(enemy.getFrame().getImage(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight(), null);
+         g.setColor(Color.RED);
+         g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5),enemy.getWidth(), (enemy.getHeight()/8));
+         g.setColor(Color.GREEN);
+         g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
+         g.setColor(Color.BLACK);
+         g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+         g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY() + "   enemyPrevX: " + enemies.get(0).getPreviousX() + "    enemyPrevY: " + enemies.get(0).getPreviousY(), 0,YSIZE-100);
+      }
+      for(Item item: items)
+      {
+         g.drawImage(item.getFrame().getImage(), item.getX(), item.getY(), item.getWidth(), item.getHeight(), null);
+         
+      }
+         
+      for(Item item: inventory)
+      {
+         g.drawImage(item.getFrame().getImage(), item.getX(), item.getY(), item.getWidth(), item.getHeight(), null);
+         
       }
    }      
    
@@ -1462,6 +1497,7 @@ public class Panel extends JPanel implements KeyListener
             movePlayer();
             setBoundaries(mainPlayer);
             hallMonitorMovement(); 
+            handeItems();
             healthCheck();
          }
          repaint();
