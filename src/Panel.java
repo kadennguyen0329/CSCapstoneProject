@@ -11,11 +11,13 @@ import java.awt.Rectangle;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class Panel extends JPanel implements KeyListener
+public class Panel extends JPanel implements KeyListener, MouseListener
 {
    public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
    public static final int XSIZE = (int) size.getWidth();
@@ -1495,6 +1497,30 @@ public class Panel extends JPanel implements KeyListener
       {
          mainPlayer.setIsHiding(false);
       }
+   }
+   
+   public void mouseClicked(MouseEvent e)
+   {
+      if(e.getButton() == MouseEvent.BUTTON1)
+      {
+         System.out.println("Left Click");
+      }
+   }
+   
+   public void mouseEntered(MouseEvent e)
+   {
+   }
+   
+   public void mouseExited(MouseEvent e)
+   {
+   }
+   
+   public void mousePressed(MouseEvent e)
+   {
+   }
+   
+   public void mouseReleased(MouseEvent e)
+   {
    }
     
    private class Listener implements ActionListener
