@@ -1,5 +1,5 @@
 import javax.swing.ImageIcon;
-public class Entity
+public abstract class Entity
 {
    private ImageIcon frame;
    private int x;

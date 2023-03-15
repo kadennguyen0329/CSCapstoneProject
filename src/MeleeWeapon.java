@@ -1,9 +1,27 @@
 public class MeleeWeapon extends Item
 {
    private int damage;
-   public MeleeWeapon(int xCoord, int yCoord, int w, int h, String[][] imageFileName, int dmg)
+   private int range;
+   public MeleeWeapon(int xCoord, int yCoord, int w, int h, String[][] imageFileName, int dmg, int rg)
    {
       super(xCoord, yCoord, w, h, imageFileName);
       damage = dmg;
+      range  = rg;
+   }
+   
+   public int getRange()
+   {
+      return range;
+   }
+   
+   public int getDamage()
+   {
+      return damage;
+   }
+   
+   public void use(Character target)
+   {
+      if(Math.sqrt(Math.pow(this.getX()-target.getX(), 2) + Math.pow(this.getY()-target.getY(), 2)) < range)
+         target.damage(damage);
    }
 }
