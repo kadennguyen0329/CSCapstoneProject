@@ -84,13 +84,17 @@ public class Panel extends JPanel implements KeyListener
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
       enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
       items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 25));
+            items.add(new MeleeWeapon(XSIZE/4, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 25));
+
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 25));
+
    }
    
    public void handeItems()
    {
       for(int i = items.size()-1; i >= 0; i--)
       {
-         if(distance(mainPlayer.getX(), mainPlayer.getY(), items.get(i).getX(), items.get(i).getY()) < 60)
+         if(distance(mainPlayer.getX(), mainPlayer.getY(), items.get(i).getX(), items.get(i).getY()) < 60 && pressedKeys.contains(KeyEvent.VK_F))
          {
             inventory.add(items.remove(i));
          }
@@ -100,6 +104,11 @@ public class Panel extends JPanel implements KeyListener
       {
          item.setX(mainPlayer.getX());
          item.setY(mainPlayer.getY());
+      }
+      
+      if(pressedKeys.contains(KeyEvent.VK_H) && inventory.size() !=0)
+      {
+            items.add(inventory.remove(0));
       }
    }
 
