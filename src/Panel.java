@@ -43,7 +43,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    
    public static final String[][] mainPlayerImages = {{"images/Player.png", null},{"images/PlayerWalk1.png","images/PlayerWalk2.png"}};
    public static final String[][] enemyImages = {{"images/Enemy.png", null},{null,null}};
-   public static final String[][] itemImages = {{"images/Bat.png", null},{null,null}};
+   public static final String[][] itemImages = {{"images/Bat.png", null},{"images/BatUse.png",null}};
 
    
    public static Player mainPlayer;
@@ -63,6 +63,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    public static int exitY;
    public static int playerTwiceChange;
    public static int frames;
+   private static int coolDownCountdown;
    
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
@@ -84,8 +85,8 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
-      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100));
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 0));
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100, 50));
    
    }
    
@@ -101,8 +102,22 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       
       for(Item item: inventory)
       {
-         item.setX(mainPlayer.getX());
-         item.setY(mainPlayer.getY());
+         if(!item.onCoolDown())
+         {
+            item.setX(mainPlayer.getX());
+            item.setY(mainPlayer.getY());
+         }
+         else
+         {
+            coolDownCountdown--;
+            item.setX(mainPlayer.getX()-item.getWidth());
+            item.setY(mainPlayer.getY());
+            if(coolDownCountdown <= 0)
+            {
+            item.setOnCoolDown(false);
+            item.setFrame(0,0);
+            }
+         }
       }
       
       if(pressedKeys.contains(KeyEvent.VK_H) && inventory.size() !=0)
@@ -692,14 +707,20 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          ImageIcon pic = new ImageIcon("images/End.png");
          g.drawImage(pic.getImage(), 0, 0, XSIZE, YSIZE, null);
       }
-      g.setColor(Color.RED);
-      g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5),mainPlayer.getWidth(), (mainPlayer.getHeight()/8));
-      g.setColor(Color.GREEN);
-      g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5) , (int)(mainPlayer.getWidth()*(mainPlayer.getHealth()/100.0)), (mainPlayer.getHeight()/8)); 
+      if(!mainPlayer.isHiding()){
+         g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
+         for(Item item: inventory)
+         {
+            g.drawImage(item.getFrame().getImage(), item.getX(), item.getY(), item.getWidth(), item.getHeight(), null);
+            System.out.print(item.getFrame());
+         }
+         g.setColor(Color.RED);
+         g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5),mainPlayer.getWidth(), (mainPlayer.getHeight()/8));
+         g.setColor(Color.GREEN);
+         g.fillRect(mainPlayer.getX(), mainPlayer.getY()-(mainPlayer.getHeight()/5) , (int)(mainPlayer.getWidth()*(mainPlayer.getHealth()/100.0)), (mainPlayer.getHeight()/8)); 
+      }
       
       seeObstacles(g);
-      if(!mainPlayer.isHiding())
-         g.drawImage(mainPlayer.getFrame().getImage(), mainPlayer.getX(), mainPlayer.getY(), mainPlayer.getWidth(), mainPlayer.getHeight(), null);
       
       for(Character enemy: enemies)
       {
@@ -718,11 +739,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          
       }
          
-      for(Item item: inventory)
-      {
-         g.drawImage(item.getFrame().getImage(), item.getX(), item.getY(), item.getWidth(), item.getHeight(), null);
-         
-      }
+    
    }      
    
    private void seeObstacles(Graphics g)
@@ -1502,8 +1519,13 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       {
          for(Item item: inventory)
          {       
-            if(enemies.size()!=0)
+            if(!item.onCoolDown() && enemies.size()!=0)
+            {
                item.use(enemies.get(0));
+               inventory.get(0).setFrame(1, 0);
+               item.setOnCoolDown(true);
+               coolDownCountdown = item.getCoolDown();
+            }
          }
       
       }
