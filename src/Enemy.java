@@ -2,8 +2,7 @@ public class Enemy extends Character
 {
    public boolean isFollowing;
    public int dps;
-   public int prevHall, playerTwiceChange, followTime, exitX, exitY;
-   public double timeDistance;
+   public int prevHall;
 
    
    public Enemy(int xCoord, int yCoord, int w, int h, String[][] imageFileName, int health1,int strength1 , int speed1, String name1, int location1, int dmg)
@@ -13,10 +12,6 @@ public class Enemy extends Character
       previousY = yCoord;  
       dps = dmg;      
       prevHall = 1;
-      timeDistance = 0;
-      followTime = 0;
-      exitX = 0; 
-      exitY = 0;
     
    }
    
@@ -44,77 +39,5 @@ public class Enemy extends Character
    {
       isFollowing = x;
    }
-   
-   public void setTimeDistamce(double x)
-   {
-      timeDistance = x;
-   }
-   
-   public double getTimeDistance()
-   {
-      return timeDistance;
-   }
-   
-   public int getPlayerTwiceChange()
-   {
-      return playerTwiceChange;
-   }
-   
-   public int getExitX()
-   {
-      return exitX;
-   }
-   
-   public int getExitY()
-   {
-      return exitY;
-   }
-   
-   public boolean followThrough(int location, Player mainPlayer)
-   {
-      boolean check = false;
-      if(prevHall != location)
-      {  
-         if(followTime == 0)
-         {
-            timeDistance = distance(getX(), getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/10;
-            playerTwiceChange = location;
-         }
-         else if(playerTwiceChange != location)
-         {
-            timeDistance = distance(getX(), getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/10;
-            playerTwiceChange = location;
-            followTime = 0;
-         }
-         followTime++;
-         if(followTime == 2)
-         {
-            setPreviousX(mainPlayer.getX());
-            setPreviousY(mainPlayer.getY());
-            exitX = mainPlayer.getX();
-            exitY = mainPlayer.getY();
-         }
-         
-         if(followTime >= timeDistance)
-         {
-            setX(exitX);
-            setY(exitY);
-            setLocation(location);
-            prevHall = location;
-            followTime = 0;
-            if(!mainPlayer.isHiding())
-            {
-               setIsFollowing(true);
-            }
-         }
-      }
-      return check;
-   }
-
-
-   public static double distance(int x1, int y1, int x2, int y2){
-      return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
-   }
-
 
 }

@@ -48,12 +48,13 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    
    public static Player mainPlayer;
    public static final int defaultSpeed = (int)(XSIZE*(0.5/120));
-   public static final int enemySpeed = (int)(XSIZE*(0.2/120));
+   public static final int enemySpeed = defaultSpeed/4;
    public static final int PLAYER_HEIGHT = YSIZE/13;
    public static final int PLAYER_WIDTH = XSIZE/45; 
-   public static final Color obstacleColor = new Color(255, 0, 0, 0);
-   private static int hallMonitorStage;
    private static boolean hasMovedHallMonitor;
+   
+   public static final Color obstacleColor = new Color(255, 0, 0, 0);
+
    
    public static int location;
    public static double timeDistance;
@@ -82,29 +83,14 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       location = LOBBY;
       Sound.initialize();
       frames = 0;
-      hallMonitorStage = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-<<<<<<< Updated upstream
       enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 0));
-      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100, 50));
-=======
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 4, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 5, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 6, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 7, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 8, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 9, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 10, 1, "Hall Monitor3", 1, 0));
-      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, PLAYER_WIDTH/2, (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100));
->>>>>>> Stashed changes
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100, 50));//Bat
    
    }
    
-   public void handeItems()
+   public void handleItems()
    {
       for(int i = items.size()-1; i >= 0; i--)
       {
@@ -128,8 +114,8 @@ public class Panel extends JPanel implements KeyListener, MouseListener
             item.setY(mainPlayer.getY());
             if(coolDownCountdown <= 0)
             {
-            item.setOnCoolDown(false);
-            item.setFrame(0,0);
+               item.setOnCoolDown(false);
+               item.setFrame(0,0);
             }
          }
       }
@@ -140,392 +126,274 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       }
    }
 
-   public void resetHallMonitor() {hallMonitorStage = 0; hasMovedHallMonitor = false;}
+   public void resetHallMonitor() {hasMovedHallMonitor = false;}
    
    public void hallMonitorMovement()
    { 
-      if(enemies.size() != 0)
+      if(enemies.size() != 0 && enemies.get(0).getPrevHall() != location)
       {
-         for(int i=0; i<enemies.size(); i++)
+         if(followTime == 0)
          {
-            enemies.get(i).followThrough(location, mainPlayer);
+            timeDistance = distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/10;
+            changingLoc = true;
+            playerTwiceChange = location;
          }
+         else if(playerTwiceChange != location)
+         {
+            timeDistance = distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getPreviousX(), mainPlayer.getPreviousY())/100;
+            followTime = 0;
+            playerTwiceChange = location;
+         }
+         followTime++;
+         if(followTime == 2)
+         {
+            playerTwiceChange = location;
+            enemies.get(0).setPreviousX(mainPlayer.getX());
+            enemies.get(0).setPreviousY(mainPlayer.getY());
+            exitX = mainPlayer.getX();
+            exitY = mainPlayer.getY();
+         }
+         
+         if(followTime >= timeDistance && changingLoc)
+         {
+            enemies.get(0).setX(enemies.get(0).getPreviousX());
+            enemies.get(0).setY(enemies.get(0).getPreviousY());
+            enemies.get(0).setLocation(location);
+            enemies.get(0).setPrevHall(location);
+            followTime = 0;
+            if(!mainPlayer.isHiding())
+            {
+               enemies.get(0).setIsFollowing(true);
+            }
+         }    
       }
-         
-      for(int i=0; i<enemies.size(); i++)
+       
+      if((enemies.size() != 0 && distance(enemies.get(0).getX(), enemies.get(0).getY(), mainPlayer.getX(), mainPlayer.getY()) < 800 && !mainPlayer.isHiding()) || changingLoc)
       {
-         if(enemies.size() != 0 && enemies.get(i).getLocation() != location)
+         if(!mainPlayer.isHiding())
          {
-            enemies.get(i).setX(-9999);
+            hallMonitorFollow();
          }
          
-         if(enemies.size() != 0 || changingLoc)
+         
+         if(enemies.size() != 0 && !enemies.get(0).getIsFollowing())
          {
             if(!mainPlayer.isHiding())
             {
-               hallMonitorFollow(enemies.get(i));
+               enemies.get(0).setIsFollowing(true);
             }
-         
-         
-            if(enemies.size() != 0 && !enemies.get(i).getIsFollowing())
+            else
             {
-               if(!mainPlayer.isHiding())
-               {
-                  enemies.get(i).setIsFollowing(true);
-               }
-               else
-               {
-                  enemies.get(i).setIsFollowing(false);
-               }
-               if(!changingLoc)
-               {
-                  enemies.get(i).setPreviousX(enemies.get(i).getX());
-                  enemies.get(i).setPreviousY(enemies.get(i).getY());
-               }
+               enemies.get(0).setIsFollowing(false);
+            }
+            if(!changingLoc)
+            {
+               enemies.get(0).setPreviousX(enemies.get(0).getX());
+               enemies.get(0).setPreviousY(enemies.get(0).getY());
             }
          }
-         
-         /*else if(enemies.size() != 0 && enemies.get(i).getIsFollowing())
-         {
-            if(enemies.get(i).getIsFollowing())
-            {
-               hallMonitorReturn(enemies.get(i).getPreviousX(), enemies.get(i).getPreviousY());
-               if(enemies.get(i).getX() == enemies.get(i).getPreviousX() && enemies.get(i).getY() == enemies.get(i).getPreviousY())
-               {
-                  enemies.get(i).setIsFollowing(false);
-               }
-            }
-         }*/
+      }
       
-         if(location == LOBBY && enemies.size() != 0 && !enemies.get(i).getIsFollowing() && enemies.get(i).getLocation() == mainPlayer.getLocation())
+      else if(enemies.size() != 0 && enemies.get(0).getIsFollowing())
+      {
+         if(enemies.get(0).getIsFollowing())
          {
-            if(!hasMovedHallMonitor)
+            hallMonitorReturn(enemies.get(0).getPreviousX(), enemies.get(0).getPreviousY());
+            if(enemies.get(0).getX() == enemies.get(0).getPreviousX() && enemies.get(0).getY() == enemies.get(0).getPreviousY())
             {
-               enemies.get(i).setX((int)(XSIZE*(10.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(12.0/75)));
-               hasMovedHallMonitor = true;
-            }
-            
-            else if(hallMonitorStage == 0 & enemies.get(i).getX() < (int)(XSIZE*(90.0/120)))
-            {
-               enemies.get(i).moveX(enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() >= (int)(XSIZE*(90.0/120))))
-                  hallMonitorStage = 1;
-            }
-            
-            else if(hallMonitorStage == 1 & enemies.get(i).getY() < (int)(YSIZE*(60.0/75)))
-            {
-               enemies.get(i).moveY(enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() >= (int)(YSIZE*(60.0/75))))
-                  hallMonitorStage = 2;
-            }
-            else if(hallMonitorStage == 2 & enemies.get(i).getX() > (int)(XSIZE*(80.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(80.0/120))))
-                  hallMonitorStage = 3;
-            }
-            else if(hallMonitorStage == 3 & enemies.get(i).getY() > (int)(YSIZE*(15.0/75)))
-            {
-               enemies.get(i).moveY(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() <= (int)(YSIZE*(15.0/75))))
-                  hallMonitorStage = 4;
-            }
-            else if(hallMonitorStage == 4 & enemies.get(i).getX() > (int)(XSIZE*(55.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(55.0/120))))
-                  hallMonitorStage = 5;
-            }
-            else if(hallMonitorStage == 5 & enemies.get(i).getY() < (int)(YSIZE*(60.0/75)))
-            {
-               enemies.get(i).moveY(enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() >= (int)(YSIZE*(60.0/75))))
-                  hallMonitorStage = 6;
-            }
-            else if(hallMonitorStage == 6 & enemies.get(i).getX() > (int)(XSIZE*(37.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(37.0/120))))
-                  hallMonitorStage = 7;
-            }
-            else if(hallMonitorStage == 7 & enemies.get(i).getY() > (int)(YSIZE*(15.0/75)))
-            {
-               enemies.get(i).moveY(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() <= (int)(YSIZE*(15.0/75))))
-                  hallMonitorStage = 0;
+               enemies.get(0).setIsFollowing(false);
             }
          }
-         else if(location == EHALL && enemies.size() != 0 && !enemies.get(i).getIsFollowing() && enemies.get(i).getLocation() == mainPlayer.getLocation())
+      }
+      
+      if(location == LOBBY && enemies.size() != 0 && !enemies.get(0).getIsFollowing() && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
          {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-            else if(hallMonitorStage == 0 & enemies.get(i).getX() < (int)(XSIZE*(108.0/120)))
-            {
-               enemies.get(i).moveX(enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() >= (int)(XSIZE*(108.0/120))))
-                  hallMonitorStage = 1;
-            }
-            else if(hallMonitorStage == 1 & enemies.get(i).getX() > (int)(XSIZE*(8.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(8.0/120))))
-                  hallMonitorStage = 0;
-            }
-         }
-         else if(location == FHALL && enemies.size() != 0 && !enemies.get(i).getIsFollowing() && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(37.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(8.0/75)));
-               hasMovedHallMonitor = true;
-            }
-            else if(hallMonitorStage == 0 & enemies.get(i).getX() < (int)(XSIZE*(90.0/120)))
-            {
-               enemies.get(i).moveX(enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() >= (int)(XSIZE*(90.0/120))))
-                  hallMonitorStage = 1;
-            }
-            
-            else if(hallMonitorStage == 1 & enemies.get(i).getY() < (int)(YSIZE*(60.0/75)))
-            {
-               enemies.get(i).moveY(enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() >= (int)(YSIZE*(60.0/75))))
-                  hallMonitorStage = 2;
-            }
-            else if(hallMonitorStage == 2 & enemies.get(i).getX() > (int)(XSIZE*(80.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(80.0/120))))
-                  hallMonitorStage = 3;
-            }
-            else if(hallMonitorStage == 3 & enemies.get(i).getY() > (int)(YSIZE*(8.0/75)))
-            {
-               enemies.get(i).moveY(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() <= (int)(YSIZE*(8.0/75))))
-                  hallMonitorStage = 4;
-            }
-            else if(hallMonitorStage == 4 & enemies.get(i).getX() > (int)(XSIZE*(55.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(55.0/120))))
-                  hallMonitorStage = 5;
-            }
-            else if(hallMonitorStage == 5 & enemies.get(i).getY() < (int)(YSIZE*(60.0/75)))
-            {
-               enemies.get(i).moveY(enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() >= (int)(YSIZE*(60.0/75))))
-                  hallMonitorStage = 6;
-            }
-            else if(hallMonitorStage == 6 & enemies.get(i).getX() > (int)(XSIZE*(37.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(37.0/120))))
-                  hallMonitorStage = 7;
-            }
-            else if(hallMonitorStage == 7 & enemies.get(i).getY() > (int)(YSIZE*(8.0/75)))
-            {
-               enemies.get(i).moveY(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() <= (int)(YSIZE*(8.0/75))))
-                  hallMonitorStage = 0;
-            }
-         }
-         
-         else if(enemies.size() != 0 && location == AHALL1 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(30.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == AHALL2 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(30.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == AHALL3 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(30.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == BHALL && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == CHALL1 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(55.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(30.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == CHALL2 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(70.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(40.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == DHALL && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == FHALL2 && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(55.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(30.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == GHALL && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == KHALL && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         else if(enemies.size() != 0 && location == LHALL && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(60.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(32.0/75)));
-               hasMovedHallMonitor = true;
-            }
-         }
-         if(location == DHALLCLASS && enemies.size() != 0 && !enemies.get(i).getIsFollowing() && enemies.get(i).getLocation() == mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX((int)(XSIZE*(37.0/120)));
-               enemies.get(i).setY((int)(YSIZE*(5.0/75)));
-               hasMovedHallMonitor = true;
-            }
-            
-            else if(hallMonitorStage == 0 & enemies.get(i).getX() < (int)(XSIZE*(84.0/120)))
-            {
-               enemies.get(i).moveX(enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() >= (int)(XSIZE*(84.0/120))))
-                  hallMonitorStage = 1;
-            }
-            
-            else if(hallMonitorStage == 1 & enemies.get(i).getY() < (int)(YSIZE*(60.0/75)))
-            {
-               enemies.get(i).moveY(enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() >= (int)(YSIZE*(60.0/75))))
-                  hallMonitorStage = 2;
-            }
-            else if(hallMonitorStage == 2 & enemies.get(i).getX() > (int)(XSIZE*(40.0/120)))
-            {
-               enemies.get(i).moveX(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getX() <= (int)(XSIZE*(40.0/120))))
-                  hallMonitorStage = 3;
-            }
-            else if(hallMonitorStage == 3 & enemies.get(i).getY() > (int)(YSIZE*(5.0/75)))
-            {
-               enemies.get(i).moveY(-enemies.get(i).getSpeed());
-               if((enemies.get(i).getY() <= (int)(YSIZE*(5.0/75))))
-                  hallMonitorStage = 0;
-            }
-         }
-         else if(enemies.size() != 0 && (location == CAFEB || location == CAFEA) )
-         {
-            enemies.get(i).setX(-100);
-            enemies.get(i).setY(-100);
+            enemies.get(0).setX((int)(XSIZE*(10.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(12.0/75)));
             hasMovedHallMonitor = true;
          }
-         else if(enemies.size() != 0 && enemies.get(i).getLocation() != mainPlayer.getLocation())
-         {
-            if(!hasMovedHallMonitor)
-            {
-               enemies.get(i).setX(-10000);
-               enemies.get(i).setY(-10000);
-               hasMovedHallMonitor = true;
-            
-            }
-         }
-         if(enemies.size() != 0 && mainPlayer.isHiding())
-         {
-            enemies.get(i).setIsFollowing(false);
-            hallMonitorReturn(enemies.get(i).getExitX(), enemies.get(i).getExitY(), enemies.get(i));
-            if(enemies.get(i).getX() == enemies.get(i).getExitX() && enemies.get(i).getY() == enemies.get(i).getExitY())
-            {
-               enemies.remove(i);
-            }
-         }   
       }
+      else if(location == EHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing() && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(location == FHALL && enemies.size() != 0 && !enemies.get(0).getIsFollowing() && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(37.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(8.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      
+      else if(enemies.size() != 0 && location == AHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == AHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == AHALL3 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == BHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == CHALL1 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(55.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == CHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(70.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(40.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == DHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == FHALL2 && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(55.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(30.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == GHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == KHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && location == LHALL && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(60.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(32.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      if(location == DHALLCLASS && enemies.size() != 0 && !enemies.get(0).getIsFollowing() && enemies.get(0).getLocation() == mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX((int)(XSIZE*(37.0/120)));
+            enemies.get(0).setY((int)(YSIZE*(5.0/75)));
+            hasMovedHallMonitor = true;
+         }
+      }
+      else if(enemies.size() != 0 && (location == CAFEB || location == CAFEA) )
+      {
+         enemies.get(0).setX(-100);
+         enemies.get(0).setY(-100);
+         hasMovedHallMonitor = true;
+      }
+      else if(enemies.size() != 0 && enemies.get(0).getLocation() != mainPlayer.getLocation())
+      {
+         if(!hasMovedHallMonitor)
+         {
+            enemies.get(0).setX(-10000);
+            enemies.get(0).setY(-10000);
+            hasMovedHallMonitor = true;
+         }
+      }
+      if(enemies.size() != 0 && mainPlayer.isHiding())
+      {
+         enemies.get(0).setIsFollowing(false);
+         hallMonitorReturn(exitX, exitY);
+         if(enemies.get(0).getX() == exitX && enemies.get(0).getY() == exitY)
+         {
+            enemies.remove(0);
+         }
+      }   
    }
+
    
-   public void hallMonitorFollow(Enemy enemy)
+   public void hallMonitorFollow()
    {
       if(enemies.size() != 0)
       {
-         if(enemy.getX() < mainPlayer.getX() && !checkObstacleCollisions(enemy.getX()+enemy.getSpeed() + PLAYER_WIDTH, enemy.getY()) && !checkObstacleCollisions(enemy.getX()+enemy.getSpeed() + PLAYER_WIDTH, enemy.getY() + PLAYER_HEIGHT))
-            enemy.moveX(enemy.getSpeed());
-         if(enemy.getX() > mainPlayer.getX() && !checkObstacleCollisions(enemy.getX()-enemy.getSpeed(), enemy.getY()) && !checkObstacleCollisions(enemy.getX()-enemy.getSpeed(), enemy.getY() + PLAYER_HEIGHT))
-            enemy.moveX(-enemy.getSpeed());
-         if(enemy.getY() > mainPlayer.getY() && !checkObstacleCollisions(enemy.getX(), enemy.getY()-enemy.getSpeed()) && !checkObstacleCollisions(enemy.getX() + PLAYER_WIDTH, enemy.getY()-enemy.getSpeed()))
-            enemy.moveY(-enemy.getSpeed());
-         if(enemy.getY() < mainPlayer.getY() && !checkObstacleCollisions(enemy.getX(), enemy.getY()+enemy.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemy.getX() + PLAYER_WIDTH, enemy.getY()+enemy.getSpeed() + PLAYER_HEIGHT))
-            enemy.moveY(enemy.getSpeed());
+         if(enemies.get(0).getX() < mainPlayer.getX() && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY() + PLAYER_HEIGHT))
+            enemies.get(0).moveX(enemies.get(0).getSpeed());
+         if(enemies.get(0).getX() > mainPlayer.getX() && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY() + PLAYER_HEIGHT))
+            enemies.get(0).moveX(-enemies.get(0).getSpeed());
+         if(enemies.get(0).getY() > mainPlayer.getY() && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()-enemies.get(0).getSpeed()) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()-enemies.get(0).getSpeed()))
+            enemies.get(0).moveY(-enemies.get(0).getSpeed());
+         if(enemies.get(0).getY() < mainPlayer.getY() && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT))
+            enemies.get(0).moveY(enemies.get(0).getSpeed());
       }
-      
    }
    
-   public void hallMonitorReturn(int x, int y, Enemy enemy)
+   public void hallMonitorReturn(int x, int y)
    {
-      
-      if(enemy.getX() < x && !checkObstacleCollisions(enemy.getX()+enemy.getSpeed() + PLAYER_WIDTH, enemy.getY()) && !checkObstacleCollisions(enemy.getX()+enemy.getSpeed() + PLAYER_WIDTH, enemy.getY() + PLAYER_HEIGHT))
-         enemy.moveX(enemy.getSpeed());
-      if(enemy.getX() > x && !checkObstacleCollisions(enemy.getX()-enemy.getSpeed(), enemy.getY()) && !checkObstacleCollisions(enemy.getX()-enemy.getSpeed(), enemy.getY() + PLAYER_HEIGHT))
-         enemy.moveX(-enemy.getSpeed());
-      if(enemy.getY() > y && !checkObstacleCollisions(enemy.getX(), enemy.getY()-enemy.getSpeed()) && !checkObstacleCollisions(enemy.getX() + PLAYER_WIDTH, enemy.getY()-enemy.getSpeed()))
-         enemy.moveY(-enemy.getSpeed());
-      if(enemy.getY() < y && !checkObstacleCollisions(enemy.getX(), enemy.getY()+enemy.getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemy.getX() + PLAYER_WIDTH, enemy.getY()+enemy.getSpeed() + PLAYER_HEIGHT))
-         enemy.moveY(enemy.getSpeed());
-      
+      if(enemies.get(0).getX() < x && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()+enemies.get(0).getSpeed() + PLAYER_WIDTH, enemies.get(0).getY() + PLAYER_HEIGHT))
+         enemies.get(0).moveX(enemies.get(0).getSpeed());
+      if(enemies.get(0).getX() > x && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY()) && !checkObstacleCollisions(enemies.get(0).getX()-enemies.get(0).getSpeed(), enemies.get(0).getY() + PLAYER_HEIGHT))
+         enemies.get(0).moveX(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() > y && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()-enemies.get(0).getSpeed()) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()-enemies.get(0).getSpeed()))
+         enemies.get(0).moveY(-enemies.get(0).getSpeed());
+      if(enemies.get(0).getY() < y && !checkObstacleCollisions(enemies.get(0).getX(), enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT) && !checkObstacleCollisions(enemies.get(0).getX() + PLAYER_WIDTH, enemies.get(0).getY()+enemies.get(0).getSpeed() + PLAYER_HEIGHT))
+         enemies.get(0).moveY(enemies.get(0).getSpeed());
    }
    
    public void healthCheck()
@@ -721,7 +589,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          g.fillRect(enemy.getX(), enemy.getY()-(enemy.getHeight()/5) , (int)(enemy.getWidth()*(enemy.getHealth()/100.0)), (enemy.getHeight()/8));
          g.setColor(Color.BLACK);
          g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-         g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY() + "   enemyPrevX: " + enemy.getPreviousX() + "    enemyPrevY: " + enemy.getPreviousY(), 0,YSIZE-100);
+         g.drawString("x:"+enemy.getX() + "   y:"+enemy.getY() + "   enemyPrevX: " + enemies.get(0).getPreviousX() + "    enemyPrevY: " + enemies.get(0).getPreviousY(), 0,YSIZE-100);
       }
       for(Item item: items)
       {
@@ -1509,7 +1377,6 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       {
          for(Item item: inventory)
          {       
-<<<<<<< Updated upstream
             if(!item.onCoolDown() && enemies.size()!=0)
             {
                item.use(enemies.get(0));
@@ -1517,13 +1384,6 @@ public class Panel extends JPanel implements KeyListener, MouseListener
                item.setOnCoolDown(true);
                coolDownCountdown = item.getCoolDown();
             }
-=======
-            if(enemies.size()!=0)
-               for(int i=0; i<enemies.size(); i++)
-               {
-                  item.use(enemies.get(i));
-               }
->>>>>>> Stashed changes
          }
       
       }
@@ -1554,7 +1414,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
             movePlayer();
             setBoundaries(mainPlayer);
             hallMonitorMovement(); 
-            handeItems();
+            handleItems();
             healthCheck();
          }
          repaint();
