@@ -54,6 +54,11 @@ public class Character extends Entity
       return health;
    }
    
+   public void setHealth(int h)
+   {
+      health = h;
+   }
+   
    public int getStrength(){
       return strength;
    }

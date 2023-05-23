@@ -85,17 +85,10 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       frames = 0;
       hasMovedHallMonitor = false;
       mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 4, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 5, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 6, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 7, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 8, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 9, 1, "Hall Monitor3", 1, 0));
-      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 10, 1, "Hall Monitor3", 1, 0));
-      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 10, 100, 50));//Bat
+      enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+      enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+      enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 25, 100, 50));//Bat
    
    }
    
@@ -387,11 +380,21 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       for(int i=0; i<enemies.size(); i++)
       {
          if(enemies.get(i).getHealth() <= 0)
+         {
             enemies.remove(i);
+            mainPlayer.setHealth(mainPlayer.getHealth() + 25);
+            if(mainPlayer.getHealth() > 100)
+            {
+               mainPlayer.setHealth(100);
+            }
+         }
       }
       if(checkEnemyCollisions()){
          for(int i=0; i<enemies.size(); i++){
-            mainPlayer.damage(enemies.get(i).getDPS());
+            {
+               if(frames % 5 == 0)
+                  mainPlayer.damage(enemies.get(i).getDPS());
+            }
          }
          if(mainPlayer.getHealth() <= 0)
          { 
