@@ -772,6 +772,10 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       
       else if(location == END)
       {
+         for(int i=enemies.size()-1; i>=0; i--)
+         {
+            enemies.remove(i);
+         }
          walls.add(new Rectangle((int)(XSIZE*(32.0/900)), (int)(YSIZE*(460.0/600)), (int)(XSIZE*(300.0/900)), (int)(YSIZE*(110.0/600))));
          walls.add(new Rectangle((int)(XSIZE*(570.0/900)), (int)(YSIZE*(460.0/600)), (int)(XSIZE*(300.0/900)), (int)(YSIZE*(110.0/600))));
          
@@ -781,7 +785,10 @@ public class Panel extends JPanel implements KeyListener, MouseListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
+            
                Sound.silence();
             }
             else
@@ -792,7 +799,9 @@ public class Panel extends JPanel implements KeyListener, MouseListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
                Sound.silence();
             }
             else
@@ -803,7 +812,9 @@ public class Panel extends JPanel implements KeyListener, MouseListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor",1,1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
                Sound.silence();
             }
             else
@@ -814,7 +825,9 @@ public class Panel extends JPanel implements KeyListener, MouseListener
                location = LOBBY;
                frames = 0;
                mainPlayer = new Player(XSIZE/2, YSIZE/2, PLAYER_WIDTH, PLAYER_HEIGHT, mainPlayerImages, 100, defaultSpeed, 1, "Kaden", 1);
-               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, enemySpeed, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+               enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
                Sound.silence();
             }
             else
