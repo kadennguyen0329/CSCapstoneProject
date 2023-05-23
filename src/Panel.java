@@ -65,6 +65,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    public static int playerTwiceChange;
    public static int frames;
    private static int coolDownCountdown;
+   private static int clock;
    
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
@@ -89,6 +90,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
       enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
       items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 25, 100, 50));//Bat
+      clock = 0;
    
    }
    
@@ -459,6 +461,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    
    public void showBoard(Graphics g) //displays stuff
    {
+              
       if(location == LOBBY)
       {
          ImageIcon pic = new ImageIcon("images/lobby.png");
@@ -586,9 +589,11 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          
       }
       
-      g.drawString("" + frames, 0,100);
-         
-    
+              
+     g.setColor(Color.BLACK);
+      g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+      g.drawString(""+ clock/60 + ":" + clock%60, 100, 100);
+
    }      
    
    private void seeObstacles(Graphics g)
@@ -1425,6 +1430,9 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          }
          repaint();
          frames++;
+         clock = frames/120;
+      
+         
          
       }
    }
