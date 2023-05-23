@@ -89,7 +89,7 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       enemies.add(new Enemy((int)(XSIZE*(37.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
       enemies.add(new Enemy((int)(XSIZE*(50.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
       enemies.add(new Enemy((int)(XSIZE*(70.0/120)), (int)(YSIZE*(15.0/75)), PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
-      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 25, 100, 50));//Bat
+      items.add(new MeleeWeapon(XSIZE/3, YSIZE/3, (int)(PLAYER_HEIGHT*0.7), (int)(PLAYER_HEIGHT*0.7), itemImages, 34, 100, 50));//Bat
       clock = 0;
    
    }
@@ -134,6 +134,12 @@ public class Panel extends JPanel implements KeyListener, MouseListener
    
    public void hallMonitorMovement()
    { 
+      if(clock > 9 && frames % 111 == 0 && clock % 10 == 0)
+      {
+         enemies.add(new Enemy(-100, -100,PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 1, 1, "Hall Monitor", 1, 1));
+         enemies.add(new Enemy(-100, -100,PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 2, 1, "Hall Monitor2", 1, 1));
+         enemies.add(new Enemy(-100, -100,PLAYER_WIDTH, PLAYER_HEIGHT, enemyImages, 100, 3, 1, "Hall Monitor3", 1, 1));
+      }
       if(enemies.size() != 0)
       {
          for(int i=0; i<enemies.size(); i++)
@@ -155,7 +161,6 @@ public class Panel extends JPanel implements KeyListener, MouseListener
             {
                hallMonitorFollow(enemies.get(i));
             }
-         
          
             if(enemies.size() != 0 && !enemies.get(i).getIsFollowing())
             {
@@ -590,10 +595,10 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       }
       
               
-     g.setColor(Color.BLACK);
+      g.setColor(Color.BLACK);
       g.setFont(new Font(Font.SERIF, Font.BOLD, 25));
       g.drawString(""+ clock/60 + ":" + clock%60, 100, 100);
-
+   
    }      
    
    private void seeObstacles(Graphics g)
