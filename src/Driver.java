@@ -8,7 +8,7 @@ public class Driver
    public static void main(String[] args)
    {
       screen = new Panel();
-      JFrame frame = new JFrame("test");
+      JFrame frame = new JFrame("Escape From Hell the Prequel: School Edition!(!)");
       frame.setSize(Panel.XSIZE, Panel.YSIZE);
       frame.setLocation(0, 0);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

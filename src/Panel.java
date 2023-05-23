@@ -585,6 +585,8 @@ public class Panel extends JPanel implements KeyListener, MouseListener
          g.drawImage(item.getFrame().getImage(), item.getX(), item.getY(), item.getWidth(), item.getHeight(), null);
          
       }
+      
+      g.drawString("" + frames, 0,100);
          
     
    }      
@@ -1293,6 +1295,18 @@ public class Panel extends JPanel implements KeyListener, MouseListener
       return false;
    }
 
+//returns true if enemy has collided with an enemy
+   public boolean checkEnemyCollisions1()
+   {
+      for(Character enemy: enemies)
+      {
+         int ex = enemy.getX();
+         int ey = enemy.getY();
+         if(distance(ex, ey, mainPlayer.getX(), mainPlayer.getY()) < PLAYER_HEIGHT && Math.abs(ex-mainPlayer.getX()) < PLAYER_WIDTH)
+            return true;
+      }
+      return false;
+   }
    
    public boolean checkObstacleCollisions(int x, int y){
       for(Rectangle r: walls){
